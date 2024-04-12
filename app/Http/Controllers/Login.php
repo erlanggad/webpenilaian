@@ -113,8 +113,8 @@ class Login extends Controller
                     return redirect('/kepala-sub-bagian/home');
                     break;
 
-                case 'Manager':
-                    return redirect('/pejabat-struktural/home');
+                case 'Direktur':
+                    return redirect('/direktur/home');
                     break;
 
                     // case 'Manager':

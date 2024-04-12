@@ -86,8 +86,8 @@ Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
     Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir']);
 });
 
-//staf hr
-Route::middleware(['authStafHR'])->prefix('pejabat-struktural')->group(function () {
+//staf direktur
+Route::middleware(['authDirektur'])->prefix('direktur')->group(function () {
     Route::get('/home', [Home::class, 'index']);
     // Route::resource('/manage-pengajuan-cuti', Manage_pengajuan_cuti::class);
     // Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index_pengelolaa'])->name('manage_pengajuan_cuti.index_pengelolaa');
