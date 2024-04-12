@@ -27,7 +27,7 @@ class Manage_karyawan extends Controller
 
     public function indexKepalaSubBagian()
     {
-        $data['karyawan'] = Pegawai::join('jabatan','jabatan.id','=','pegawai.jabatan_id')->join('divisi', 'divisi.id','=','pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->get();
+        $data['karyawan'] = Pegawai::join('jabatan','jabatan.id','=','pegawai.jabatan_id')->join('divisi', 'divisi.id','=','pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 3)->get();
         return view('manage_karyawan', $data);
     }
 

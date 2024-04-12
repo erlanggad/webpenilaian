@@ -127,11 +127,11 @@
                         {{-- <li> <a href="/admin/manage-pejabat-struktural" class="waves-effect "><i class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Manage Pejabat Struktural  </span></a></li> --}}
 
                         <li> <a href="/kepala-bagian/manage-karyawan" class="waves-effect "><i
-                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Kelola
+                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Data
                                     Karyawan </span></a></li>
 
                         <li> <a href="/kepala-bagian/manage-kepala-sub-bagian" class="waves-effect "><i
-                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Kelola
+                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Data
                                     Kepala Sub Bagian </span></a></li>
                     @elseif (Session('user')['role'] == 'Manager')
                         <li> <a href="/pejabat-struktural/home" class="waves-effect "><i
