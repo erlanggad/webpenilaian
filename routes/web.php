@@ -222,6 +222,7 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
 
     Route::resource('/konfigurasi-cuti', Konfigurasi_cuti::class);
     Route::resource('/manage-karyawan', Manage_karyawan::class);
+    Route::get('/manage-kepala-sub-bagian', [Manage_karyawan::class, 'indexKepalaSubBagian']);
     // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.index');
 
