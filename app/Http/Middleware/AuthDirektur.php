@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AuthStafHR
+class AuthDirektur
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class AuthStafHR
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->get('user')['role'] == 'Kepala Bagian'){
+        if($request->session()->get('user')['role'] == 'Direktur'){
             return $next($request);
           }
-          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Kepala Bagian.');
+          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Direktur.');
     }
 }
