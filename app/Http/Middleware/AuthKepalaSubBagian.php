@@ -19,6 +19,6 @@ class AuthKepalaSubBagian
         if($request->session()->get('user')['role'] == 'Kepala Sub Bagian'){
             return $next($request);
           }
-          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Kepala Bagian.');
+          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Kepala Sub Bagian.');
     }
 }
