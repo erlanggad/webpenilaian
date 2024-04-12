@@ -17,7 +17,7 @@
     </div>
     <!-- .row -->
     <div class="row">
-        <div class="col-lg-3 col-sm-6 col-xs-12">
+        {{-- <div class="col-lg-3 col-sm-6 col-xs-12">
             <div class="white-box analytics-info">
                 <h3 class="box-title">Cuti Terpakai {{date('Y')}}</h3>
                 <ul class="list-inline two-part">
@@ -56,7 +56,7 @@
                     <li class="text-right"> <span class="counter text-info">{{$total_pengajuan_cuti}}</span></li>
                 </ul>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!--/.row -->
 
