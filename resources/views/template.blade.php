@@ -144,15 +144,15 @@
                             </a>
                             <ul class="nav flex-column ml-2">
                                 <li class="nav-item">
-                                    <a href="/kepala-bagian/konversi-alternatif" class="nav-link"><span
+                                    <a href="/kepala-bagian/konversi-alternatif-waspas" class="nav-link"><span
                                             class="hide-menu">Konversi Alternatif</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/kepala-bagian/hasil-normalisasi" class="nav-link"><span
+                                    <a href="/kepala-bagian/hasil-normalisasi-waspas" class="nav-link"><span
                                             class="hide-menu">Hasil Normalisasi</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/karyawan/manage-kinerja-kepala-sub-bagian" class="nav-link"><span
+                                    <a href="/kepala-bagian/hasil-akhir-waspas" class="nav-link"><span
                                             class="hide-menu">Hasil Akhir</span></a>
                                 </li>
                             </ul>
