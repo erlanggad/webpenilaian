@@ -176,8 +176,8 @@
                                             class="hide-menu">Hasil Normalisasi</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/kepala-bagian/hasil-akhir-moora" class="nav-link"><span
-                                            class="hide-menu">Hasil Akhir</span></a>
+                                    <a href="/kepala-bagian/hasil-atribut-optimal" class="nav-link"><span
+                                            class="hide-menu">Hasil Atribut Optimal</span></a>
                                 </li>
                             </ul>
                         </li>
