@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-12">
-                <h4 class="page-title">Hasil Normalisasi Waspas</h4>
+                <h4 class="page-title">Hasil Normalisasi Moora</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if (Session::has('success'))
@@ -58,14 +58,14 @@
                                         <tr>
                                             <td>{{ $no }}</td>
                                             <td>{{ $item['nama_pegawai'] }}</td>
-                                            <td>{{ $item['Rij_satu'] }}</td>
-                                            <td>{{ $item['Rij_dua'] }}</td>
-                                            <td>{{ $item['Rij_tiga'] }}</td>
-                                            <td>{{ $item['Rij_empat'] }}</td>
-                                            <td>{{ $item['Rij_lima'] }}</td>
-                                            <td>{{ $item['Rij_enam'] }}</td>
-                                            <td>{{ $item['Rij_tujuh'] }}</td>
-                                            <td>{{ $item['Rij_delapan'] }}</td>
+                                            <td>{{ $item['c1'] }}</td>
+                                            <td>{{ $item['c2'] }}</td>
+                                            <td>{{ $item['c3'] }}</td>
+                                            <td>{{ $item['c4'] }}</td>
+                                            <td>{{ $item['c5'] }}</td>
+                                            <td>{{ $item['c6'] }}</td>
+                                            <td>{{ $item['c7'] }}</td>
+                                            <td>{{ $item['c8'] }}</td>
 
 
                                         </tr>

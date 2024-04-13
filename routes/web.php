@@ -12,6 +12,7 @@ use App\Http\Controllers\Manage_pengajuan_cuti;
 use App\Http\Controllers\Rekap_pengajuan_cuti;
 use App\Http\Controllers\Cuti_non;
 use App\Http\Controllers\Forgot_Password;
+use App\Http\Controllers\PerhitunganMooraController;
 use App\Http\Controllers\PerhitunganWaspasController;
 use App\Http\Controllers\Print_tahunan;
 use App\Http\Controllers\Print_non_tahunan;
@@ -194,6 +195,10 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::get('konversi-alternatif-waspas', [PerhitunganWaspasController::class, 'index']);
     Route::get('hasil-normalisasi-waspas', [PerhitunganWaspasController::class, 'normalisasi']);
     Route::get('hasil-akhir-waspas', [PerhitunganWaspasController::class, 'hasil_akhir']);
+
+    Route::get('konversi-alternatif-moora', [PerhitunganMooraController::class, 'index']);
+    Route::get('hasil-normalisasi-moora', [PerhitunganMooraController::class, 'normalisasi']);
+    Route::get('hasil-akhir-waspas', [PerhitunganMooraController::class, 'hasil_akhir']);
 });
 
 //staf kepala sub bagian
