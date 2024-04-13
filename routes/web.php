@@ -171,6 +171,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
 
     Route::resource('/konfigurasi-cuti', Konfigurasi_cuti::class);
     Route::resource('/manage-karyawan', Manage_karyawan::class);
+    Route::resource('/manage-kinerja-kepala-sub-bagian', Manage_karyawan::class);
     Route::get('/manage-kepala-sub-bagian', [Manage_karyawan::class, 'indexKepalaSubBagian']);
 
     // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
@@ -183,11 +184,14 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
     Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
 
-    Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
-    Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
+    // Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
+    // Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
     // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class,'hasil_akhir']);
 
-    Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir'])->name('cuti_non.indexHasilAkhirManager');
+    // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir'])->name('cuti_non.indexHasilAkhirManager');
+
+
+    Route::get('konversi-alternatif', [PerhitunganWaspasController::class, 'index']);
 });
 
 //staf kepala sub bagian
