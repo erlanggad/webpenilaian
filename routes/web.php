@@ -199,7 +199,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::get('konversi-alternatif-moora', [PerhitunganMooraController::class, 'index']);
     Route::get('hasil-normalisasi-moora', [PerhitunganMooraController::class, 'normalisasi']);
     Route::get('hasil-atribut-optimal', [PerhitunganMooraController::class, 'hasil_atribut_optimal']);
-    Route::get('hasil-akhir-waspas', [PerhitunganMooraController::class, 'hasil_akhir']);
+    Route::get('hasil-akhir-moora', [PerhitunganMooraController::class, 'hasil_akhir']);
 });
 
 //staf kepala sub bagian
