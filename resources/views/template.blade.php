@@ -148,7 +148,7 @@
                                             class="hide-menu">Konversi Alternatif</span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/karyawan/manage-kinerja-kepala-sub-bagian" class="nav-link"><span
+                                    <a href="/kepala-bagian/hasil-normalisasi" class="nav-link"><span
                                             class="hide-menu">Hasil Normalisasi</span></a>
                                 </li>
                                 <li class="nav-item">

@@ -192,6 +192,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
 
 
     Route::get('konversi-alternatif', [PerhitunganWaspasController::class, 'index']);
+    Route::get('hasil-normalisasi', [PerhitunganWaspasController::class, 'normalisasi']);
 });
 
 //staf kepala sub bagian
