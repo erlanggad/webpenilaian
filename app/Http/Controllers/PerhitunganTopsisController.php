@@ -374,7 +374,7 @@ class PerhitunganTopsisController extends Controller
         $min_c6 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c6
         $min_c7 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c7
         $min_c8 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c8
-        
+
 
 
         foreach ($atribut_optimal as $item) {
@@ -388,32 +388,28 @@ class PerhitunganTopsisController extends Controller
             $min_c6 = min($min_c6, $item['c6']);
             $min_c7 = min($min_c7, $item['c7']);
             $min_c8 = min($min_c8, $item['c8']);
-
-
-
-
         }
 
         $solusi_ideal = [
             "solusi_ideal_positif" => [
-           "max_c1 " => $max_c1,  
-           "max_c2 " => $max_c2,  
-           "max_c3 " => $max_c3,  
-           "max_c4 " => $max_c4,  
-           "max_c5 " => $max_c5,  
-           "max_c6 " => $max_c6,  
-           "max_c7 " => $max_c7,  
-           "max_c8 " => $max_c8,
+                "max_c1 " => $max_c1,
+                "max_c2 " => $max_c2,
+                "max_c3 " => $max_c3,
+                "max_c4 " => $max_c4,
+                "max_c5 " => $max_c5,
+                "max_c6 " => $max_c6,
+                "max_c7 " => $max_c7,
+                "max_c8 " => $max_c8,
             ],
             "solusi_ideal_negatif" => [
-           "min_c1 " => $min_c1,  
-           "min_c2 " => $min_c2,  
-           "min_c3 " => $min_c3,  
-           "min_c4 " => $min_c4,  
-           "min_c5 " => $min_c5,  
-           "min_c6 " => $min_c6,  
-           "min_c7 " => $min_c7,  
-           "min_c8 " => $min_c8,    
+                "min_c1 " => $min_c1,
+                "min_c2 " => $min_c2,
+                "min_c3 " => $min_c3,
+                "min_c4 " => $min_c4,
+                "min_c5 " => $min_c5,
+                "min_c6 " => $min_c6,
+                "min_c7 " => $min_c7,
+                "min_c8 " => $min_c8,
             ]
         ];
 
@@ -423,7 +419,7 @@ class PerhitunganTopsisController extends Controller
         ];
         //   dd($solusi_ideal['solusi_ideal_negatif']);
 
-        return view('solusi_ideal_topsis', ['data' => $solusi_ideal, 'tipe'=>$tipe_solusi_ideal]);
+        return view('solusi_ideal_topsis', ['data' => $solusi_ideal, 'tipe' => $tipe_solusi_ideal]);
     }
 
     public function hasil_akhir()
@@ -508,18 +504,148 @@ class PerhitunganTopsisController extends Controller
             ];
         }
 
-        $hasil_akhir = [];
+
+        $solusi_ideal = [];
+
+        $max_c1 = -INF; // Inisialisasi nilai maksimum untuk c1
+        $max_c2 = -INF; // Inisialisasi nilai maksimum untuk c2
+        $max_c3 = -INF; // Inisialisasi nilai maksimum untuk c3
+        $max_c4 = -INF; // Inisialisasi nilai maksimum untuk c4
+        $max_c5 = -INF; // Inisialisasi nilai maksimum untuk c5
+        $max_c6 = -INF; // Inisialisasi nilai maksimum untuk c6
+        $max_c7 = -INF; // Inisialisasi nilai maksimum untuk c7
+        $max_c8 = -INF; // Inisialisasi nilai maksimum untuk c8
+
 
         foreach ($atribut_optimal as $item) {
-            // Menghitung hasil akhir dari penjumlahan c1 sampai c8
-            $total = $item['c1'] + $item['c2'] + $item['c3'] + $item['c4'] + $item['c5'] + $item['c6'] + $item['c7'] + $item['c8'];
+            // dd($item);
+            // Update nilai maksimum untuk setiap kriteria
+            $max_c1 = max($max_c1, $item['c1']);
+            $max_c2 = max($max_c2, $item['c2']);
+            $max_c3 = max($max_c3, $item['c3']);
+            $max_c4 = max($max_c4, $item['c4']);
+            $max_c5 = max($max_c5, $item['c5']);
+            $max_c6 = max($max_c6, $item['c6']);
+            $max_c7 = max($max_c7, $item['c7']);
+            $max_c8 = max($max_c8, $item['c8']);
 
-            // Menyimpan hasil akhir dalam variabel baru
+
+
+
+            // dd($item->c1);
+        }
+
+        $min_c1 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c1
+        $min_c2 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c2
+        $min_c3 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c3
+        $min_c4 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c4
+        $min_c5 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c5
+        $min_c6 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c6
+        $min_c7 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c7
+        $min_c8 = PHP_INT_MAX; // Inisialisasi nilai minimum untuk c8
+
+
+
+        foreach ($atribut_optimal as $item) {
+            // dd($item);
+            // Update nilai maksimum untuk setiap kriteria
+            $min_c1 = min($min_c1, $item['c1']);
+            $min_c2 = min($min_c2, $item['c2']);
+            $min_c3 = min($min_c3, $item['c3']);
+            $min_c4 = min($min_c4, $item['c4']);
+            $min_c5 = min($min_c5, $item['c5']);
+            $min_c6 = min($min_c6, $item['c6']);
+            $min_c7 = min($min_c7, $item['c7']);
+            $min_c8 = min($min_c8, $item['c8']);
+        }
+
+        $solusi_ideal = [
+            "solusi_ideal_positif" => [
+                "max_c1 " => $max_c1,
+                "max_c2 " => $max_c2,
+                "max_c3 " => $max_c3,
+                "max_c4 " => $max_c4,
+                "max_c5 " => $max_c5,
+                "max_c6 " => $max_c6,
+                "max_c7 " => $max_c7,
+                "max_c8 " => $max_c8,
+            ],
+            "solusi_ideal_negatif" => [
+                "min_c1 " => $min_c1,
+                "min_c2 " => $min_c2,
+                "min_c3 " => $min_c3,
+                "min_c4 " => $min_c4,
+                "min_c5 " => $min_c5,
+                "min_c6 " => $min_c6,
+                "min_c7 " => $min_c7,
+                "min_c8 " => $min_c8,
+            ]
+        ];
+
+        $tipe_solusi_ideal = [
+            "solusi ideal negatif",
+            "solusi ideal positif"
+        ];
+
+        $hasil_akhir = [];
+
+        // dd($max_c1);
+
+        foreach ($atribut_optimal as $item) {
+            $hasil_positif = number_format(sqrt(
+                pow(($max_c1 -  $item['c1']), 2) +
+                    pow(($max_c2 - $item['c2']), 2) +
+                    pow(($max_c3 -  $item['c3']), 2) +
+                    pow(($max_c4 - $item['c4']), 2) +
+                    pow(($max_c5 - $item['c5']), 2) +
+                    pow(($max_c6 - $item['c6']), 2) +
+                    pow(($max_c7 - $item['c7']), 2) +
+                    pow(($max_c8 - $item['c8']), 2)
+            ), 3);
+
+            $hasil_negatif = number_format(
+                sqrt(
+                    pow(($item['c1'] - $min_c1), 2) +
+                        pow(($item['c2'] - $min_c2), 2) +
+                        pow(($item['c3'] - $min_c3), 2) +
+                        pow(($item['c4'] - $min_c4), 2) +
+                        pow(($item['c5'] - $min_c5), 2) +
+                        pow(($item['c6'] - $min_c6), 2) +
+                        pow(($item['c7'] - $min_c7), 2) +
+                        pow(($item['c8'] - $min_c8), 2)
+                ),
+                3
+            );
+
+            $hasil_final = number_format($hasil_negatif / $hasil_negatif + $hasil_positif, 3);
             $hasil_akhir[] = [
                 'nama' => $item['nama_pegawai'],
-                'skor_akhir' => number_format($total, 3)
+                'D+' => $hasil_positif,
+                'D-' => $hasil_negatif,
+                'skor_akhir' => $hasil_final
             ];
         }
+
+        // dd($hasil_akhir);
+
+
+
+
+
+
+
+
+
+        // foreach ($atribut_optimal as $item) {
+        //     // Menghitung hasil akhir dari penjumlahan c1 sampai c8
+        //     $total = $item['c1'] + $item['c2'] + $item['c3'] + $item['c4'] + $item['c5'] + $item['c6'] + $item['c7'] + $item['c8'];
+
+        //     // Menyimpan hasil akhir dalam variabel baru
+        //     $hasil_akhir[] = [
+        //         'nama' => $item['nama_pegawai'],
+        //         'skor_akhir' => number_format($total, 3)
+        //     ];
+        // }
         // Menghitung nilai hasil akhir seperti sebelumnya
         //     $hasil_akhir = [];
 
@@ -539,7 +665,7 @@ class PerhitunganTopsisController extends Controller
         // // dd($normalisasi);
         // $role['role'] = Session('user')['role'];
         // dd($hasil_akhir);
-        return view('hasil_akhir_moora', ['data' => $hasil_akhir]);
+        return view('hasil_akhir_topsis', ['data' => $hasil_akhir]);
         // } else {
 
         //     $hasil_akhir = [];
