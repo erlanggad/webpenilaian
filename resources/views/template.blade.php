@@ -107,7 +107,7 @@
                         <!-- /input-group -->
                     </li>
 
-                    <li class="nav-small-cap m-t-10">--- Main Menu</li>
+                    <li class="nav-small-cap m-t-10 ml-2">Main Menu</li>
                     @if (Session('user')['role'] == 'admin')
                         <li> <a href="/admin/home" class="waves-effect "><i
                                     class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Home

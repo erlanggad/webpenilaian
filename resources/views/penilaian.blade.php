@@ -24,8 +24,8 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-md-12">
-                @if ($role == 'karyawan' || $role == 'Karyawan')
-                    <a href="/karyawan/cuti-non-tahunan/create">
+                @if ($role != 'karyawan' || $role != 'Karyawan')
+                    <a href="/kepala-sub-bagian/form-penilaian/create">
                         <button class="btn btn-primary btn-block">Tambah</button>
                     </a>
                 @endif
@@ -35,7 +35,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h3 class="box-title m-b-0">Data Pengajuan Cuti</h3>
+                    <h3 class="box-title m-b-0">Data Penilaian Kinerja Karyawan</h3>
                     <div class="col-md-4"></div>
                     <div class="col-md-3 mb-4">
                         <label for="bulan">Filter Bulans:</label>
@@ -147,28 +147,28 @@
     </div>
     <!-- Tambahkan bagian JavaScript di bawah dropdown -->
     <script>
-        document.getElementById('bulan').addEventListener('change', function() {
-            var bulan = this.value;
-            var url =
-                "{{ Session('user')['role'] === 'karyawan' ? route('cuti_non.indexKaryawan') : (Session('user')['role'] === 'Manager' ? route('cuti_non.indexManager') : route('cuti_non.indexAdmin')) }}";
+        // document.getElementById('bulan').addEventListener('change', function() {
+        //     var bulan = this.value;
+        //     var url =
 
-            if (bulan) {
-                url += "?bulan=" + bulan;
-            }
-            window.location.href = url;
-        });
 
-        // Function to update the "Semua Tahun" option based on the selected year
-        function updateSemuaTahunOption(selectedYear) {
-            var semuaTahunOption = document.getElementById('semua-bulan-option');
-            if (!selectedYear) {
-                semuaTahunOption.selected = true;
-            }
-        }
+        //     if (bulan) {
+        //         url += "?bulan=" + bulan;
+        //     }
+        //     window.location.href = url;
+        // });
 
-        // Initial call to update the "Semua Tahun" option based on the selected year
-        var selectedYear = new URLSearchParams(window.location.search).get('bulan');
-        updateSemuaTahunOption(selectedYear);
+        // // Function to update the "Semua Tahun" option based on the selected year
+        // function updateSemuaTahunOption(selectedYear) {
+        //     var semuaTahunOption = document.getElementById('semua-bulan-option');
+        //     if (!selectedYear) {
+        //         semuaTahunOption.selected = true;
+        //     }
+        // }
+
+        // // Initial call to update the "Semua Tahun" option based on the selected year
+        // var selectedYear = new URLSearchParams(window.location.search).get('bulan');
+        // updateSemuaTahunOption(selectedYear);
     </script>
     <!-- /.row -->
 @endsection

@@ -81,7 +81,7 @@ Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
     Route::resource('/manage-karyawan', Manage_karyawan::class);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.indexAdmin');
 
-    Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexAdmin');
+    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexAdmin');
 
     Route::resource('/kriteria', CriteriaController::class);
     Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
@@ -126,12 +126,12 @@ Route::middleware(['authDirektur'])->prefix('direktur')->group(function () {
     // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.index');
 
-    Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
-    Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
-    // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
-    Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
-    Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
-    Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
+    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
+    // Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
+    // // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
+    // Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
+    // Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
+    // Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
 
     Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
     Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
@@ -180,12 +180,12 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.index');
 
-    Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
-    Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
-    // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
-    Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
-    Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
-    Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
+    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
+    // Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
+    // // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
+    // Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
+    // Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
+    // Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
 
     // Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
     // Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
@@ -221,6 +221,7 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
     // Route untuk menampilkan halaman index pengelola
     Route::resource('/manage-karyawan', Manage_karyawan::class);
     Route::resource('/form-penilaian', PenilaianController::class);
+    Route::post('/form-penilaian/store', [PenilaianController::class, 'store']);
     Route::get('konversi-alternatif-waspas', [PerhitunganWaspasController::class, 'index']);
     Route::get('hasil-normalisasi-waspas', [PerhitunganWaspasController::class, 'normalisasi']);
     Route::get('hasil-akhir-waspas', [PerhitunganWaspasController::class, 'hasil_akhir']);
@@ -271,14 +272,14 @@ Route::middleware(['authKaryawan'])->prefix('karyawan')->group(function () {
     Route::resource('/print-tahunan', Print_tahunan::class);
     // Route::resource('/cuti-non-tahunan', Cuti_non::class);
 
-    Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexKaryawan');
-    Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
-    // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
-    Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
-    Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
-    Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
-    Route::resource('/print-non-tahunan', Print_non_tahunan::class);
-    Route::post('/store-pengajuan-non', [Cuti_non::class, 'store']);
+    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexKaryawan');
+    // Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
+    // // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
+    // Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
+    // Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
+    // Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
+    // Route::resource('/print-non-tahunan', Print_non_tahunan::class);
+    // Route::post('/store-pengajuan-non', [Cuti_non::class, 'store']);
 });
 
-Route::get('/urgensi_cuti_detail/{id}', [Cuti_non::class, 'getUrgensiCuti']);
+// Route::get('/urgensi_cuti_detail/{id}', [Cuti_non::class, 'getUrgensiCuti']);

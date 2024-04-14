@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Criteria;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use App\models\Pengajuan_cuti_non;
 use App\Models\Penilaian;
@@ -72,7 +73,7 @@ class PenilaianController extends Controller
 
             // dd($data);
 
-            return view('pengajuan_cuti_non', $data);
+            return view('penilaian', $data);
         } else {
             $bulan = $request->input('bulan');
 
@@ -121,9 +122,9 @@ class PenilaianController extends Controller
 
     public function create()
     {
-        $urgensi_cuti = Urgensi_Cuti::all();
-
-        return view('form_pengajuan_cuti_non', compact('urgensi_cuti'));
+        $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        $criteria = Criteria::all();
+        return view('form_penilaian', compact('pegawai', 'criteria'));
     }
 
     public function getUrgensiCuti($id)
@@ -147,36 +148,37 @@ class PenilaianController extends Controller
 
     public function store(Request $request)
     {
-        $id_karyawan = Session('user')['id'];
-        $urgensiCuti = Urgensi_Cuti::where('id', $request->urgensi_cuti_id)->first();
-        $sisaCuti = View_sisa_cuti::where('pegawai_id', $id_karyawan)->first();
+        // $data = $request->all();
+        // dd($request->all());
+        // $simpan = Penilaian::create();
+        // $simpan->pegawai_id = 6;
+        // $simpan->c1 = $request->C1;
+        // $simpan->c2 = $request->C2;
+        // $simpan->c3 = $request->C3;
+        // $simpan->c4 = $request->C4;
+        // $simpan->c5 = $request->C5;
+        // $simpan->c5 = $request->C5;
+        // $simpan->c6 = $request->C6;
+        // $simpan->c7 = $request->C7;
+        // $simpan->c8 = $request->C8;
+        // // dd($simpan);
 
-        // dd($urgensiCuti->nama);
-        $data = $request->all();
-        // $data['pegawai_id'] = $id_karyawan;
-        // // $data['urgensi_cuti_id'] = $request->urgensi_cuti_id;
-        // $data['lama_cuti'] = $request->lama_cuti;
-        // $urgensiCuti = Urgensi_Cuti::where('id', $request->urgensi_cuti_id)->first();
-        // $data['keterangan'] = $urgensiCuti->nama;
+        // $simpan->save();
 
-        $simpan = Pengajuan_cuti_non::create($data);
-        $simpan->pegawai_id = $id_karyawan;
-        $simpan->urgensi_cuti_id = $request->urgensi_cuti_id;
-        $simpan->lama_cuti = $request->lama_cuti;
-        $simpan->keterangan = $urgensiCuti->nama;
-        $simpan->divisi_id = $request->divisi_id;
-        $simpan->sisa_cuti = $sisaCuti->sisa_cuti;
-        if ($request->hasFile('image')) {
-            $request->file('image')->move('uploadnon/', $request->file('image')->getClientOriginalName());
-            $simpan->image = $request->file('image')->getClientOriginalName();
-            $simpan->save();
-        }
-        if ($request->hasFile('ttd_karyawan')) {
-            $request->file('ttd_karyawan')->move('uploadnon/', $request->file('ttd_karyawan')->getClientOriginalName());
-            $simpan->ttd_karyawan = $request->file('ttd_karyawan')->getClientOriginalName();
-            $simpan->save();
-        }
-        return redirect('/karyawan/cuti-non-tahunan')->with('success', 'Berhasil membuat pengajuan cuti');
+        Penilaian::create([
+            'pegawai_id' => $request->pegawai_id,
+            'c1' => $request->C1,
+            'c2' => $request->C2,
+            'c3' => $request->C3,
+            'c4' => $request->C4,
+            'c5' => $request->C5,
+            'c6' => $request->C6,
+            'c7' => $request->C7,
+            'c8' => $request->C8,
+        ]);
+
+
+        return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil membuat pengajuan cuti');
     }
 
     public function edit(Request $request)
