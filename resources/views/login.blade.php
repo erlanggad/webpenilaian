@@ -7,22 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('plugins/images/cuti (2).png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('plugins/images/cuti (2).png') }}">
     <!-- Bootstrap Core CSS -->
-    <link href="{{URL::asset('bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{URL::asset('plugins/bower_components/datatables/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css" />
-    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <link href="{{URL::asset('plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ URL::asset('plugins/bower_components/bootstrap-extension/css/bootstrap-extension.css') }}"
+        rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="{{URL::asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
     <!-- morris CSS -->
-    <link href="{{URL::asset('plugins/bower_components/morrisjs/morris.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('plugins/bower_components/morrisjs/morris.css') }}" rel="stylesheet">
     <!-- animation CSS -->
-    <link href="{{URL::asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('css/animate.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
     <!-- color CSS -->
-    <link href="{{URL::asset('css/colors/default.css')}}" id="theme" rel="stylesheet">
+    <link href="{{ URL::asset('css/colors/default.css') }}" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -47,8 +50,7 @@
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
-    <meta name="keywords"
-        content="Login Form" />
+    <meta name="keywords" content="Login Form" />
     <!-- //Meta tag Keywords -->
 
     <link href="//fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -71,27 +73,31 @@
                 <div class="main-mockup">
 
                     <div class="w3l_form align-self">
-                        <div class="left_grid_info">
+                        {{-- <div class="left_grid_info">
                             <img src="" alt="">
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="content-wthree">
-                        <center><h2>Login</h2></center>
+                        <center>
+                            <h2>Login</h2>
+                        </center>
                         <form id="loginform" action="/login-action" method="post">
                             @csrf
 
-                         @if (Session::has('failed'))
-                    <div class="alert alert-danger alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{ Session::get('failed') }}
-                    </div>
-                    @endif
+                            @if (Session::has('failed'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">&times;</button>
+                                    {{ Session::get('failed') }}
+                                </div>
+                            @endif
                             <input type="email" class="email" name="email" placeholder="Masukkan Email" required>
-                            <input type="password" class="password" name="password" placeholder="Masukkan Password" style="margin-bottom: 2px;" required>
+                            <input type="password" class="password" name="password" placeholder="Masukkan Password"
+                                style="margin-bottom: 2px;" required>
                             <button name="submit" name="submit" class="btn" type="submit">Login</button>
                             <div class="mt-2" style="width: 100%; text-align:right">
-                            <a href="/forgot-password" >Lupa Kata Sandi ?</a>
-                        </div>
+                                <a href="/forgot-password">Lupa Kata Sandi ?</a>
+                            </div>
                         </form>
                         <div class="social-icons">
                             <p>Create Account! <a href="/register">Register</a>.</p>
@@ -106,9 +112,9 @@
 
     <script src="js/jquery.min.js"></script>
     <script>
-        $(document).ready(function (c) {
-            $('.alert-close').on('click', function (c) {
-                $('.main-mockup').fadeOut('slow', function (c) {
+        $(document).ready(function(c) {
+            $('.alert-close').on('click', function(c) {
+                $('.main-mockup').fadeOut('slow', function(c) {
                     $('.main-mockup').remove();
                 });
             });
