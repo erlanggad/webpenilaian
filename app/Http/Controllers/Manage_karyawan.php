@@ -16,18 +16,20 @@ class Manage_karyawan extends Controller
     {
         $role = Session('user')['role'];
 
-        if($role == "Kepala Bagian"){
-        $data['karyawan'] = Pegawai::join('jabatan','jabatan.id','=','pegawai.jabatan_id')->join('divisi', 'divisi.id','=','pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
-    }else{
-            $data['karyawan'] = Pegawai::join('jabatan','jabatan.id','=','pegawai.jabatan_id')->join('divisi', 'divisi.id','=','pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->get();
-    }
-    // dd($data);
+        if ($role == "Kepala Bagian") {
+            $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        } elseif ($role == "Kepala Sub Bagian") {
+            $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        } else {
+            $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->get();
+        }
+        // dd($data);
         return view('manage_karyawan', $data);
     }
 
     public function indexKepalaSubBagian()
     {
-        $data['karyawan'] = Pegawai::join('jabatan','jabatan.id','=','pegawai.jabatan_id')->join('divisi', 'divisi.id','=','pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 3)->get();
+        $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 3)->get();
         return view('manage_karyawan', $data);
     }
 
@@ -53,9 +55,9 @@ class Manage_karyawan extends Controller
             // $sisa_cuti->sisa_cuti = $getKonfigCuti->jumlah_cuti;
             // $sisa_cuti->save();
 
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('success', 'Berhasil membuat karyawan');
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('success', 'Berhasil membuat karyawan');
         } else {
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('failed', 'Gagal membuat karyawan');
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('failed', 'Gagal membuat karyawan');
         }
     }
 
@@ -87,19 +89,19 @@ class Manage_karyawan extends Controller
         // $karyawan->image=$request->image;
 
         if ($karyawan->save()) {
-            if ($request->hasFile('image') ) {
+            if ($request->hasFile('image')) {
                 $request->file('image')->move('tanda_tangan/', $request->file('image')->getClientOriginalName());
                 $karyawan->image = $request->file('image')->getClientOriginalName();
                 $karyawan->save();
             }
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('success', 'Berhasil memperbarui karyawan');
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('success', 'Berhasil memperbarui karyawan');
         } else {
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('failed', 'Gagal memperbarui karyawan');
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('failed', 'Gagal memperbarui karyawan');
         }
     }
 
-    public function show(){
-
+    public function show()
+    {
     }
 
     public function destroy(Request $request, $id)
@@ -110,10 +112,10 @@ class Manage_karyawan extends Controller
 
         if ($karyawan->delete()) {
             $sisacuti = View_sisa_cuti::where('pegawai_id', $id)->first();
-             $sisacuti->delete();
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('success', 'Berhasil menghapus karyawan');
+            $sisacuti->delete();
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('success', 'Berhasil menghapus karyawan');
         } else {
-            return redirect(Session('user')['role'].'/manage-karyawan')->with('failed', 'Gagal menghapus karyawan');
+            return redirect(Session('user')['role'] . '/manage-karyawan')->with('failed', 'Gagal menghapus karyawan');
         }
     }
 }

@@ -25,82 +25,21 @@ class PerhitunganWaspasController extends Controller
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
                 ->get();
-
-            $kriteria = Criteria::all();
-            // $penilaian = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')
-            //     ->join('urgensi_cuti', 'urgensi_cuti.id', '=', 'cuti_non.urgensi_cuti_id')
-            //     ->select('cuti_non.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk', 'urgensi_cuti.nama', 'urgensi_cuti.lama_cuti', 'urgensi_cuti.nilai')->where('cuti_non.divisi_id', Session('user')['divisi'])
-            //     ->get();
-            // } else {
-            //     $penilaian = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')
-            //         ->join('urgensi_cuti', 'urgensi_cuti.id', '=', 'cuti_non.urgensi_cuti_id')
-            //         ->select('cuti_non.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk', 'urgensi_cuti.nama', 'urgensi_cuti.lama_cuti', 'urgensi_cuti.nilai')
-            //         ->get();
+        } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
+            $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                ->where('pegawai.divisi_id', Session('user')['divisi'])
+                ->where('pegawai.jabatan_id', 4)
+                ->get();
         }
+
+        $kriteria = Criteria::all();
+
         // dd($penilaian);
 
         $data['penilaian'] = $penilaian;
         $data['kriteria'] = $kriteria;
-        // foreach ($penilaian as $penilaians) {
-        //     $tahunMasuk = (new \DateTime($penilaians->tgl_pegawai_masuk))->format('Y');
-        //     $tahunSekarang = (new \DateTime())->format('Y');
 
-        //     // Menghitung k3 sesuai ketentuan
-        //     $tahunDiff = $tahunSekarang - $tahunMasuk;
-        //     if ($tahunDiff > 5) {
-        //         $k3 = 4;
-        //     } elseif ($tahunDiff >= 4 && $tahunDiff <= 5) {
-        //         $k3 = 3;
-        //     } elseif ($tahunDiff == 3) {
-        //         $k3 = 2;
-        //     } elseif ($tahunDiff >= 1 && $tahunDiff <= 2) {
-        //         $k3 = 1;
-        //     } else {
-        //         $k3 = 0; // Jika tidak sesuai kondisi di atas
-        //     }
-
-        //     // Menghitung k2 sesuai ketentuan
-        //     $sisaCuti = $penilaians->sisa_cuti;
-        //     if ($sisaCuti > 5) {
-        //         $k2 = 4;
-        //     } elseif ($sisaCuti == 4) {
-        //         $k2 = 3;
-        //     } elseif ($sisaCuti == 3) {
-        //         $k2 = 2;
-        //     } elseif ($sisaCuti >= 1 && $sisaCuti <= 2) {
-        //         $k2 = 1;
-        //     } else {
-        //         $k2 = 0; // Jika tidak sesuai kondisi di atas
-        //     }
-
-        //     // Menghitung k4 sesuai ketentuan
-        //     $lamaCuti = $penilaians->lama_cuti;
-        //     if ($lamaCuti == 1) {
-        //         $k4 = 4;
-        //     } elseif ($lamaCuti == 2) {
-        //         $k4 = 3;
-        //     } elseif ($lamaCuti == 3) {
-        //         $k4 = 2;
-        //     } elseif ($lamaCuti > 3) {
-        //         $k4 = 1;
-        //     } else {
-        //         $k4 = 0; // Jika tidak sesuai kondisi di atas
-        //     }
-
-        //     $data[] = [
-        //         'nama_pegawai' => $penilaians->nama_pegawai,
-        //         'k1' => $penilaians->nilai,
-        //         'k2' => $k2,
-        //         'k3' => $k3,
-        //         'k4' => $k4
-        //     ];
-        // }
-        //     $roc = new RankOrderCentroidController();
-        //     $criteriaWeight = $roc->criteriaWeight();
-
-        //     return view('admin.criteria.index', compact('criterias', 'criteriaWeight'));
-        // }
-        // dd($data);
         return view('konversi_penilaian', ['data' => $data]);
     }
 
@@ -113,7 +52,14 @@ class PerhitunganWaspasController extends Controller
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
                 ->get();
+        } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
+            $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                ->where('pegawai.divisi_id', Session('user')['divisi'])
+                ->where('pegawai.jabatan_id', 4)
+                ->get();
         }
+
 
         $max_c1 = -INF; // Inisialisasi nilai maksimum untuk c1
         $max_c2 = -INF; // Inisialisasi nilai maksimum untuk c2
@@ -186,7 +132,14 @@ class PerhitunganWaspasController extends Controller
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
                 ->get();
+        } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
+            $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                ->where('pegawai.divisi_id', Session('user')['divisi'])
+                ->where('pegawai.jabatan_id', 4)
+                ->get();
         }
+
 
         $max_c1 = -INF; // Inisialisasi nilai maksimum untuk c1
         $max_c2 = -INF; // Inisialisasi nilai maksimum untuk c2
@@ -261,8 +214,8 @@ class PerhitunganWaspasController extends Controller
                 // 'id_cuti_non' => $item2['id_cuti_non'],
                 'nama' => $item2['nama_pegawai'],
                 'skor_akhir' => number_format($nilai, 4),
-                'sum q1' =>$item2['Rij_satu'] * $nilai_criteria[0] + $item2['Rij_dua'] * $nilai_criteria[1] + $item2['Rij_tiga'] * $nilai_criteria[2] + $item2['Rij_empat'] * $nilai_criteria[3] + $item2['Rij_lima'] * $nilai_criteria[4] + $item2['Rij_enam'] * $nilai_criteria[5] + $item2['Rij_tujuh'] * $nilai_criteria[6] + $item2['Rij_delapan'] * $nilai_criteria[7],
-                
+                'sum q1' => $item2['Rij_satu'] * $nilai_criteria[0] + $item2['Rij_dua'] * $nilai_criteria[1] + $item2['Rij_tiga'] * $nilai_criteria[2] + $item2['Rij_empat'] * $nilai_criteria[3] + $item2['Rij_lima'] * $nilai_criteria[4] + $item2['Rij_enam'] * $nilai_criteria[5] + $item2['Rij_tujuh'] * $nilai_criteria[6] + $item2['Rij_delapan'] * $nilai_criteria[7],
+
                 'q1' => $q1,
                 'q2' => number_format($q2, 3),
                 'row 1' => number_format(($item2['Rij_satu'] * $nilai_criteria[0]), 3),

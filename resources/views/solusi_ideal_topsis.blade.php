@@ -57,16 +57,40 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Solusi Ideal Positif</td>
-                                        @foreach ($data['solusi_ideal_positif'] as $item2)
-                                            <td>{{ $item2 }}</td>
-                                        @endforeach
+                                        @if ($data['solusi_ideal_positif'])
+                                            @foreach ($data['solusi_ideal_positif'] as $item2)
+                                                <td>{{ $item2 }}</td>
+                                            @endforeach
+                                        @else
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                        @endif
+
                                     </tr>
                                     <tr>
                                         <td>2</td>
                                         <td>Solusi Ideal Negatif</td>
-                                        @foreach ($data['solusi_ideal_negatif'] as $item2)
-                                            <td>{{ $item2 }}</td>
-                                        @endforeach
+                                        @if ($data['solusi_ideal_negatif'])
+
+                                            @foreach ($data['solusi_ideal_negatif'] as $item2)
+                                                <td>{{ $item2 }}</td>
+                                            @endforeach
+                                        @else
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                            <td>-</td>
+                                        @endif
                                     </tr>
                                     {{-- @endforeach --}}
                                 </tbody>
