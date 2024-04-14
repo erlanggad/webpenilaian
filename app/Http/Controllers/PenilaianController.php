@@ -183,39 +183,47 @@ class PenilaianController extends Controller
 
     public function edit(Request $request)
     {
-        $data['cuti_non'] = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')->where([
-            'id_cuti_non' => $request->segment(3)
+        $penilaian = Penilaian::where([
+            'id' => $request->segment(3)
         ])->first();
-        return view('form_konfirmasi_pengajuan_non', $data);
+
+        $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        $criteria = Criteria::all();
+        // $divisi = Divisi::all();
+        // $jabatan = Jabatan::all();
+        return view('form_penilaian', compact('pegawai', 'penilaian', 'criteria'));
     }
 
     public function update(Request $request)
     {
-        $pengajuan_cuti = Pengajuan_cuti_non::where([
-            'id_cuti_non' => $request->segment(3)
+        $penilaian = Penilaian::where([
+            'id' => $request->segment(3)
         ])->first();
-        $data_sisa_cuti = View_sisa_cuti::where([
-            'pegawai_id' => $pengajuan_cuti->pegawai_id
-        ])->first();
+        // $data_sisa_cuti = View_sisa_cuti::where([
+        //     'pegawai_id' => $pengajuan_cuti->pegawai_id
+        // ])->first();
 
         // dd($data_sisa_cuti);
-        $nama = Session('user')['nama'];
-        $jabatan = Session('user')['jabatan'];
-        $ttd = Session('user')['image'];
-        $pengajuan_cuti->status = $request->status;
-        $pengajuan_cuti->verifikasi_oleh = $nama;
-        $pengajuan_cuti->jabatan_verifikasi = $jabatan;
-        $pengajuan_cuti->catatan = $request->catatan;
-        $pengajuan_cuti->ttd = $ttd;
+
+        $penilaian->pegawai_id = 6;
+        $penilaian->c1 = $request->C1;
+        $penilaian->c2 = $request->C2;
+        $penilaian->c3 = $request->C3;
+        $penilaian->c4 = $request->C4;
+        $penilaian->c5 = $request->C5;
+        $penilaian->c5 = $request->C5;
+        $penilaian->c6 = $request->C6;
+        $penilaian->c7 = $request->C7;
+        $penilaian->c8 = $request->C8;
         // $pengajuan_cuti->sisa_cuti = $data_sisa_cuti->sisa_cuti - $pengajuan_cuti->lama_cuti;
 
-        if ($pengajuan_cuti->save()) {
+        if ($penilaian->save()) {
             // $data_sisa_cuti->sisa_cuti = $data_sisa_cuti->sisa_cuti - $pengajuan_cuti->lama_cuti;
             // $data_sisa_cuti->cuti_terpakai = $data_sisa_cuti->cuti_terpakai + $pengajuan_cuti->lama_cuti;
             // $data_sisa_cuti->save();
-            return redirect('/pejabat-struktural/hasil-akhir-pengajuan-cuti/non-tahunan')->with('success', 'Berhasil memperbarui pengajuan cuti');
+            return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil memperbarui pengajuan cuti');
         } else {
-            return redirect('/pejabat-struktural/hasil-akhir-pengajuan-cuti/non-tahunan')->with('failed', 'Gagal memperbarui pengajuan cuti');
+            return redirect('/kepala-sub-bagian/form-penilaian/')->with('failed', 'Gagal memperbarui pengajuan cuti');
         }
     }
 

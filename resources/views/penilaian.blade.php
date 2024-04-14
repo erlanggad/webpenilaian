@@ -106,7 +106,7 @@
                                         @if (in_array($role, ['Kepala Sub Bagian']))
                                             <th>
                                                 <a class="ml-auto mr-auto"
-                                                    href="/pejabat-struktural/cuti-non-tahunan/{{ $item->id_cuti_non }}/edit">
+                                                    href="/kepala-sub-bagian/form-penilaian/{{ $item->id }}/edit">
                                                     <button class="btn btn-warning ml-auto mr-auto">Edit</button>
                                                 </a>
                                                 <form class="ml-auto mr-auto mt-3" method="POST"
