@@ -225,7 +225,9 @@
                                     class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Data
                                     Karyawan </span></a></li>
 
-
+                        <li> <a href="/kepala-sub-bagian/form-penilaian" class="waves-effect "><i
+                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Form
+                                    Penilaian Kepala Sub Bagian </span></a></li>
                         <li class="nav-item">
                             <a href="#"
                                 class="nav-link waves-effect d-flex justify-content-between align-items-center">

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 use App\models\Pengajuan_cuti_non;
+use App\Models\Penilaian;
 use App\Models\Urgensi_Cuti;
 use App\Models\View_sisa_cuti;
 use Illuminate\Contracts\Session\Session;
 
-class Cuti_non extends Controller
+class PenilaianController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,9 +20,9 @@ class Cuti_non extends Controller
                 # code...
                 return $this->index_karyawan($request);
                 break;
-            case 'Karyawan':
+            case 'Kepala Sub Bagian':
                 # code...
-                return $this->index_karyawan($request);
+                return $this->index_penilaian_karyawan($request);
                 break;
             case 'Manager':
                 # code...
@@ -38,7 +40,8 @@ class Cuti_non extends Controller
         }
     }
 
-    public function index_pengelola($request){
+    public function index_penilaian_karyawan($request)
+    {
         // $data['role'] = Session('user')['role'];
         // // $data['cuti_non'] = Pengajuan_cuti_non::join('karyawan','karyawan.id_karyawan','=','cuti_non.id_karyawan')->get();
         // // $data['cuti_non'] = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')->join('urgensi_cuti', 'urgensi_cuti.id','=','cuti_non.urgensi_cuti_id')->where('cuti_non.divisi_id', Session('user')['divisi'])->get();
@@ -48,43 +51,49 @@ class Cuti_non extends Controller
         $id_divisi = Session('user')['id_divisi'];
 
         // Ambil bulan dari request
-        if($data['role'] == 'Manager'){
-        $bulan = $request->input('bulan');
+        if ($data['role'] == 'Kepala Sub Bagian') {
+            // $bulan = $request->input('bulan');
 
-        // Buat query untuk pengajuan cuti
-        $query = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')->join('urgensi_cuti', 'urgensi_cuti.id','=','cuti_non.urgensi_cuti_id')
-            ->where('cuti_non.divisi_id', Session('user')['divisi']);
+            // Buat query untuk pengajuan cuti
+            $query = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                ->where('pegawai.divisi_id', Session('user')['divisi'])
+                ->where('pegawai.jabatan_id', 4);
 
-        // Terapkan filter berdasarkan bulan jika dipilih
-        if ($bulan) {
-            $query->whereMonth('tanggal_pengajuan', $bulan);
+            // Terapkan filter berdasarkan bulan jika dipilih
+            // if ($bulan) {
+            //     $query->whereMonth('tanggal_pengajuan', $bulan);
+            // }
+
+            // Ambil data pengajuan cuti
+            $data['penilaian'] = $query->get();
+            $data['kriteria'] = Criteria::all();
+
+
+            // dd($data);
+
+            return view('pengajuan_cuti_non', $data);
+        } else {
+            $bulan = $request->input('bulan');
+
+            // Buat query untuk pengajuan cuti
+            $query = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')->join('urgensi_cuti', 'urgensi_cuti.id', '=', 'cuti_non.urgensi_cuti_id');
+
+
+            // Terapkan filter berdasarkan bulan jika dipilih
+            if ($bulan) {
+                $query->whereMonth('tanggal_pengajuan', $bulan);
+            }
+
+            // Ambil data pengajuan cuti
+            $data['cuti_non'] = $query->get();
+
+            return view('pengajuan_cuti_non', $data);
         }
-
-        // Ambil data pengajuan cuti
-        $data['cuti_non'] = $query->get();
-
-        return view('pengajuan_cuti_non', $data);
-
-    }else{
-        $bulan = $request->input('bulan');
-
-        // Buat query untuk pengajuan cuti
-        $query = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')->join('urgensi_cuti', 'urgensi_cuti.id','=','cuti_non.urgensi_cuti_id');
-
-
-        // Terapkan filter berdasarkan bulan jika dipilih
-        if ($bulan) {
-            $query->whereMonth('tanggal_pengajuan', $bulan);
-        }
-
-        // Ambil data pengajuan cuti
-        $data['cuti_non'] = $query->get();
-
-        return view('pengajuan_cuti_non', $data);
-    }
     }
 
-    public function index_karyawan($request){
+    public function index_karyawan($request)
+    {
         $data['role'] = Session('user')['role'];
         $id_karyawan = Session('user')['id'];;
         // $data['cuti_non'] = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')
@@ -96,8 +105,8 @@ class Cuti_non extends Controller
         $bulan = $request->input('bulan');
 
         // Buat query untuk pengajuan cuti
-        $query = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')
-        ->where(['pegawai_id' => $id_karyawan]);
+        $query = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')
+            ->where(['pegawai_id' => $id_karyawan]);
 
         // Terapkan filter berdasarkan bulan jika dipilih
         if ($bulan) {
@@ -108,7 +117,6 @@ class Cuti_non extends Controller
         $data['cuti_non'] = $query->get();
 
         return view('pengajuan_cuti_non', $data);
-
     }
 
     public function create()
@@ -118,7 +126,8 @@ class Cuti_non extends Controller
         return view('form_pengajuan_cuti_non', compact('urgensi_cuti'));
     }
 
-    public function getUrgensiCuti($id){
+    public function getUrgensiCuti($id)
+    {
         $urgensi_cuti = Urgensi_Cuti::find($id);
 
         if ($urgensi_cuti) {
@@ -134,7 +143,6 @@ class Cuti_non extends Controller
                 'message' => 'Data tidak ditemukan'
             ], 404);
         }
-
     }
 
     public function store(Request $request)
@@ -145,35 +153,35 @@ class Cuti_non extends Controller
 
         // dd($urgensiCuti->nama);
         $data = $request->all();
-            // $data['pegawai_id'] = $id_karyawan;
-            // // $data['urgensi_cuti_id'] = $request->urgensi_cuti_id;
-            // $data['lama_cuti'] = $request->lama_cuti;
-            // $urgensiCuti = Urgensi_Cuti::where('id', $request->urgensi_cuti_id)->first();
-            // $data['keterangan'] = $urgensiCuti->nama;
+        // $data['pegawai_id'] = $id_karyawan;
+        // // $data['urgensi_cuti_id'] = $request->urgensi_cuti_id;
+        // $data['lama_cuti'] = $request->lama_cuti;
+        // $urgensiCuti = Urgensi_Cuti::where('id', $request->urgensi_cuti_id)->first();
+        // $data['keterangan'] = $urgensiCuti->nama;
 
-            $simpan = Pengajuan_cuti_non::create($data);
-            $simpan->pegawai_id = $id_karyawan;
-            $simpan->urgensi_cuti_id = $request->urgensi_cuti_id;
-            $simpan->lama_cuti = $request->lama_cuti;
-            $simpan->keterangan = $urgensiCuti->nama;
-            $simpan->divisi_id = $request->divisi_id;
-            $simpan->sisa_cuti = $sisaCuti->sisa_cuti;
-            if ($request->hasFile('image') ) {
-               $request->file('image')->move('uploadnon/', $request->file('image')->getClientOriginalName());
-               $simpan->image = $request->file('image')->getClientOriginalName();
-               $simpan->save();
-            }
-            if ($request->hasFile('ttd_karyawan') ) {
-                $request->file('ttd_karyawan')->move('uploadnon/', $request->file('ttd_karyawan')->getClientOriginalName());
-                $simpan->ttd_karyawan = $request->file('ttd_karyawan')->getClientOriginalName();
-                $simpan->save();
-             }
-            return redirect('/karyawan/cuti-non-tahunan')->with('success', 'Berhasil membuat pengajuan cuti');
+        $simpan = Pengajuan_cuti_non::create($data);
+        $simpan->pegawai_id = $id_karyawan;
+        $simpan->urgensi_cuti_id = $request->urgensi_cuti_id;
+        $simpan->lama_cuti = $request->lama_cuti;
+        $simpan->keterangan = $urgensiCuti->nama;
+        $simpan->divisi_id = $request->divisi_id;
+        $simpan->sisa_cuti = $sisaCuti->sisa_cuti;
+        if ($request->hasFile('image')) {
+            $request->file('image')->move('uploadnon/', $request->file('image')->getClientOriginalName());
+            $simpan->image = $request->file('image')->getClientOriginalName();
+            $simpan->save();
+        }
+        if ($request->hasFile('ttd_karyawan')) {
+            $request->file('ttd_karyawan')->move('uploadnon/', $request->file('ttd_karyawan')->getClientOriginalName());
+            $simpan->ttd_karyawan = $request->file('ttd_karyawan')->getClientOriginalName();
+            $simpan->save();
+        }
+        return redirect('/karyawan/cuti-non-tahunan')->with('success', 'Berhasil membuat pengajuan cuti');
     }
 
     public function edit(Request $request)
     {
-        $data['cuti_non'] = Pengajuan_cuti_non::join('pegawai','pegawai.id','=','cuti_non.pegawai_id')->where([
+        $data['cuti_non'] = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')->where([
             'id_cuti_non' => $request->segment(3)
         ])->first();
         return view('form_konfirmasi_pengajuan_non', $data);
@@ -209,17 +217,17 @@ class Cuti_non extends Controller
         }
     }
 
-    public function show(Request $request){
-
+    public function show(Request $request)
+    {
     }
 
     public function destroy(Request $request)
     {
         $pengajuan_cuti = Pengajuan_cuti_non::find($request->segment(3));
         if ($pengajuan_cuti->delete()) {
-            return redirect(Session('user')['role'].'/cuti-non-tahunan')->with('success', 'Berhasil menghapus pengajuan cuti');
+            return redirect(Session('user')['role'] . '/cuti-non-tahunan')->with('success', 'Berhasil menghapus pengajuan cuti');
         } else {
-            return redirect(Session('user')['role'].'/cuti-non-tahunan')->with('failed', 'Gagal menghapus pengajuan cuti');
+            return redirect(Session('user')['role'] . '/cuti-non-tahunan')->with('failed', 'Gagal menghapus pengajuan cuti');
         }
     }
 }

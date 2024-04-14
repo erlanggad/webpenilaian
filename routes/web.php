@@ -12,6 +12,7 @@ use App\Http\Controllers\Manage_pengajuan_cuti;
 use App\Http\Controllers\Rekap_pengajuan_cuti;
 use App\Http\Controllers\Cuti_non;
 use App\Http\Controllers\Forgot_Password;
+use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\PerhitunganMooraController;
 use App\Http\Controllers\PerhitunganTopsisController;
 use App\Http\Controllers\PerhitunganWaspasController;
@@ -219,6 +220,7 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
 
     // Route untuk menampilkan halaman index pengelola
     Route::resource('/manage-karyawan', Manage_karyawan::class);
+    Route::resource('/form-penilaian', PenilaianController::class);
     Route::get('konversi-alternatif-waspas', [PerhitunganWaspasController::class, 'index']);
     Route::get('hasil-normalisasi-waspas', [PerhitunganWaspasController::class, 'normalisasi']);
     Route::get('hasil-akhir-waspas', [PerhitunganWaspasController::class, 'hasil_akhir']);
