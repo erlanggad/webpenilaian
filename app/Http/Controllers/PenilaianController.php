@@ -225,11 +225,12 @@ class PenilaianController extends Controller
 
     public function destroy(Request $request)
     {
-        $pengajuan_cuti = Pengajuan_cuti_non::find($request->segment(3));
+        $pengajuan_cuti = Penilaian::find($request->segment(3));
+        // dd($pengajuan_cuti);
         if ($pengajuan_cuti->delete()) {
-            return redirect(Session('user')['role'] . '/cuti-non-tahunan')->with('success', 'Berhasil menghapus pengajuan cuti');
+            return redirect('/kepala-sub-bagian/form-penilaian')->with('success', 'Berhasil menghapus pengajuan cuti');
         } else {
-            return redirect(Session('user')['role'] . '/cuti-non-tahunan')->with('failed', 'Gagal menghapus pengajuan cuti');
+            return redirect('/kepala-sub-bagian/form-penilaian')->with('failed', 'Gagal menghapus pengajuan cuti');
         }
     }
 }

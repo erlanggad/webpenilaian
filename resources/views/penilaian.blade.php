@@ -109,6 +109,13 @@
                                                     href="/pejabat-struktural/cuti-non-tahunan/{{ $item->id_cuti_non }}/edit">
                                                     <button class="btn btn-warning ml-auto mr-auto">Edit</button>
                                                 </a>
+                                                <form class="ml-auto mr-auto mt-3" method="POST"
+                                                    action="/kepala-sub-bagian/form-penilaian/{{ $item->id }}'">
+                                                    {{ csrf_field() }}
+                                                    @method('DELETE')
+
+                                                    <button class="btn btn-danger ml-auto mr-auto">Delete</button>
+                                                </form>
                                             </th>
                                         @endif
                                         @if (in_array($role, ['karyawan']))
