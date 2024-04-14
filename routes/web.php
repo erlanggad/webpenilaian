@@ -205,6 +205,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::get('konversi-alternatif-topsis', [PerhitunganTopsisController::class, 'index']);
     Route::get('hasil-normalisasi-topsis', [PerhitunganTopsisController::class, 'normalisasi']);
     Route::get('hasil-normalisasi-terbobot-topsis', [PerhitunganTopsisController::class, 'hasil_normalisasi_terbobot']);
+    Route::get('hasil-solusi-ideal-topsis', [PerhitunganTopsisController::class, 'hasil_solusi_ideal']);
 
     Route::get('hasil-akhir-topsis', [PerhitunganTopsisController::class, 'hasil_akhir']);
 });

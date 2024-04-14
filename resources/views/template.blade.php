@@ -208,6 +208,10 @@
                                             class="hide-menu">Hasil Normalisasi Terbobot</span></a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="/kepala-bagian/hasil-solusi-ideal-topsis" class="nav-link"><span
+                                            class="hide-menu">Hasil Solusi Ideal</span></a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="/kepala-bagian/hasil-akhir-topsis" class="nav-link"><span
                                             class="hide-menu">Hasil Akhir</span></a>
                                 </li>
