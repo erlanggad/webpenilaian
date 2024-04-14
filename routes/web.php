@@ -13,6 +13,7 @@ use App\Http\Controllers\Rekap_pengajuan_cuti;
 use App\Http\Controllers\Cuti_non;
 use App\Http\Controllers\Forgot_Password;
 use App\Http\Controllers\PerhitunganMooraController;
+use App\Http\Controllers\PerhitunganTopsisController;
 use App\Http\Controllers\PerhitunganWaspasController;
 use App\Http\Controllers\Print_tahunan;
 use App\Http\Controllers\Print_non_tahunan;
@@ -200,6 +201,12 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::get('hasil-normalisasi-moora', [PerhitunganMooraController::class, 'normalisasi']);
     Route::get('hasil-atribut-optimal', [PerhitunganMooraController::class, 'hasil_atribut_optimal']);
     Route::get('hasil-akhir-moora', [PerhitunganMooraController::class, 'hasil_akhir']);
+
+    Route::get('konversi-alternatif-topsis', [PerhitunganTopsisController::class, 'index']);
+    Route::get('hasil-normalisasi-topsis', [PerhitunganTopsisController::class, 'normalisasi']);
+    Route::get('hasil-normalisasi-terbobot-topsis', [PerhitunganTopsisController::class, 'hasil_normalisasi_terbobot']);
+
+    Route::get('hasil-akhir-topsis', [PerhitunganTopsisController::class, 'hasil_akhir']);
 });
 
 //staf kepala sub bagian

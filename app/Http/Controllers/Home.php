@@ -13,6 +13,8 @@ class Home extends Controller
 {
     public function index(Request $request)
     {
+        $user = SESSION('user');
+        // if($user){
         $role = Session('user')['role'];
         switch ($role) {
             case 'karyawan':
@@ -42,6 +44,10 @@ class Home extends Controller
                 return redirect('/login');
                 break;
         }
+    // }else{
+    //     return redirect('/login');
+
+    // }
     }
 
     // private function index_karyawan($request){

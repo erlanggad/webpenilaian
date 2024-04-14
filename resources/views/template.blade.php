@@ -185,6 +185,34 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="#"
+                                class="nav-link waves-effect d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i>
+                                    <span class="hide-menu">Perhitungan Kinerja Karyawan Topsis</span>
+                                </div>
+                                <i class="fa fa-caret-down"></i> <!-- Icon panah ke bawah -->
+                            </a>
+                            <ul class="nav flex-column ml-2">
+                                <li class="nav-item">
+                                    <a href="/kepala-bagian/konversi-alternatif-topsis" class="nav-link"><span
+                                            class="hide-menu">Konversi Alternatif</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kepala-bagian/hasil-normalisasi-topsis" class="nav-link"><span
+                                            class="hide-menu">Hasil Normalisasi </span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kepala-bagian/hasil-normalisasi-terbobot-topsis" class="nav-link"><span
+                                            class="hide-menu">Hasil Normalisasi Terbobot</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/kepala-bagian/hasil-akhir-topsis" class="nav-link"><span
+                                            class="hide-menu">Hasil Akhir</span></a>
+                                </li>
+                            </ul>
+                        </li>
                     @elseif (Session('user')['role'] == 'Manager')
                         <li> <a href="/pejabat-struktural/home" class="waves-effect "><i
                                     class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu">

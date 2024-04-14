@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-12">
-                <h4 class="page-title">Konversi Alternatif (Cuti Non Tahunan)</h4>
+                <h4 class="page-title">Konversi Alternatif</h4>
             </div>
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if (Session::has('success'))
