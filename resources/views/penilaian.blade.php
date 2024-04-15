@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 @if ($role != 'karyawan' || $role != 'Karyawan')
                     <a href="/kepala-sub-bagian/form-penilaian/create">
-                        <button class="btn btn-primary btn-block">Tambah</button>
+                        <button class="btn btn-primary btn-block" style="background-color: #1E90FF">Tambah</button>
                     </a>
                 @endif
             </div>

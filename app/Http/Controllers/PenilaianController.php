@@ -167,6 +167,7 @@ class PenilaianController extends Controller
 
         Penilaian::create([
             'pegawai_id' => $request->pegawai_id,
+            'periode' => $request->periode,
             'c1' => $request->C1,
             'c2' => $request->C2,
             'c3' => $request->C3,
@@ -205,7 +206,7 @@ class PenilaianController extends Controller
 
         // dd($data_sisa_cuti);
 
-        $penilaian->pegawai_id = 6;
+        $penilaian->pegawai_id = $request->pegawai_id ? $request->pegawai_id :  $penilaian->pegawai_id;
         $penilaian->c1 = $request->C1;
         $penilaian->c2 = $request->C2;
         $penilaian->c3 = $request->C3;

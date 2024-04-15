@@ -53,6 +53,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
+                                <div class="col-10">
+                                    <input class="form-control" name="periode" type="number" min="1" value=""
+                                        id="periode" required placeholder="Contoh : 2024">
+                                </div>
+                            </div>
                             @foreach ($criteria as $criterias)
                                 <div class="form-group row">
                                     <label for="example-email-input" class="col-2 col-form-label">Nilai
@@ -106,6 +113,13 @@
                                         @endforeach
 
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
+                                <div class="col-10">
+                                    <input class="form-control" name="periode" type="number" min="1" max="100"
+                                        value="{{ $penilaian->periode }}" id="periode" required>
                                 </div>
                             </div>
                             @foreach ($criteria as $criterias)

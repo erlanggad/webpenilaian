@@ -13,6 +13,7 @@ class Penilaian extends Model
     protected $table = "penilaian";
     protected $fillable = [
         'pegawai_id',
+        'periode',
         'c1',
         'c2',
         'c3',
