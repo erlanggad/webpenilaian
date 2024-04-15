@@ -18,6 +18,8 @@ use App\Http\Controllers\PerhitunganTopsisController;
 use App\Http\Controllers\PerhitunganWaspasController;
 use App\Http\Controllers\Print_tahunan;
 use App\Http\Controllers\Print_non_tahunan;
+use App\Http\Controllers\RankingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -237,6 +239,7 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
     Route::get('hasil-solusi-ideal-topsis', [PerhitunganTopsisController::class, 'hasil_solusi_ideal']);
 
     Route::get('hasil-akhir-topsis', [PerhitunganTopsisController::class, 'hasil_akhir']);
+    Route::get('ranking', [RankingController::class, 'index']);
 });
 
 //karyawan
