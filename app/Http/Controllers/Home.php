@@ -44,10 +44,10 @@ class Home extends Controller
                 return redirect('/login');
                 break;
         }
-    // }else{
-    //     return redirect('/login');
+        // }else{
+        //     return redirect('/login');
 
-    // }
+        // }
     }
 
     // private function index_karyawan($request){
@@ -156,8 +156,10 @@ class Home extends Controller
 
     private function index_admin($request)
     {
-        $jumlah_karyawan = Pegawai::where('jabatan_id', '!=', '1')->count();
-        $jumlah_staf_hr = Pegawai::where('jabatan_id', '=', '1')->count();
+        $jumlah_semua = Pegawai::where('jabatan_id', '!=', '1')->count();
+        $jumlah_staff = Pegawai::where('jabatan_id', '=', '4')->count();
+        $jumlah_kepala_bagian = Pegawai::where('jabatan_id', '=', '2')->count();
+        $jumlah_kepala_sub_bagian = Pegawai::where('jabatan_id', '=', '3')->count();
         // $pengajuan_cuti_verifikasi = pengajuan_cuti::where([
         //     'status' => 'verifikasi'
         // ])
@@ -166,8 +168,10 @@ class Home extends Controller
         // $total_pengajuan_cuti = pengajuan_cuti::
         // where('tanggal_pengajuan','like',date('Y')."%")
         // ->count();
-        $data['jumlah_karyawan'] = $jumlah_karyawan;
-        $data['jumlah_staf_hr'] = $jumlah_staf_hr;
+        $data['jumlah_semua'] = $jumlah_semua;
+        $data['jumlah_staff'] = $jumlah_staff;
+        $data['jumlah_kepala_bagian'] = $jumlah_kepala_bagian;
+        $data['jumlah_kepala_sub_bagian'] = $jumlah_kepala_sub_bagian;
         // $data['pengajuan_cuti_verifikasi'] = $pengajuan_cuti_verifikasi;
         // $data['total_pengajuan_cuti'] = $total_pengajuan_cuti;
         return view('home_admin', $data);
