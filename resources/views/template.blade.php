@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ URL::asset('plugins/images/cuti (2).png') }}">
-    <title>SI CUTKAR @yield('title')</title>
+    <title>SIPEKA @yield('title')</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{ URL::asset('bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet"
