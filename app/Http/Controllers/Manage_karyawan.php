@@ -12,7 +12,7 @@ use App\Models\View_sisa_cuti;
 
 class Manage_karyawan extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $role = Session('user')['role'];
 
@@ -21,7 +21,14 @@ class Manage_karyawan extends Controller
         } elseif ($role == "Kepala Sub Bagian") {
             $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
         } else {
-            $data['karyawan'] = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->get();
+            $jabatan = $request->input('jabatan');
+
+            $query = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->orderBy('pegawai.jabatan_id', 'ASC');
+
+            if ($jabatan) {
+                $query->where('pegawai.jabatan_id', $jabatan);
+            }
+            $data['karyawan'] = $query->get();
         }
         // dd($data);
         return view('manage_karyawan', $data);

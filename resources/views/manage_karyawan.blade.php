@@ -36,6 +36,23 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title m-b-0">Data Karyawan</h3>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-3 mb-4">
+                        <label for="jabatan">Filter Jabatan</label>
+                        @php
+                            use App\Models\Jabatan;
+
+                            $jabatan = Jabatan::all();
+                        @endphp
+                        <select class="form-control" id="jabatan" name="jabatan">
+                            <option value="" {{ request('jabatan') == '' ? 'selected' : '' }}
+                                id="semua-jabatan-option" selected>Semua</option>
+                            @foreach ($jabatan as $list)
+                                <option value="{{ $list->id }}" {{ request('jabatan') == $list->id ? 'selected' : '' }}>
+                                    {{ ucfirst($list->nama) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="table-responsive">
                         <table id="myTable" class="table table-striped">
                             <thead>
@@ -59,7 +76,7 @@
                                         <td>{{ $item->nik }}</td>
                                         <td>{{ $item->email }}</td>
                                         <td>{{ $item->created_at->translatedFormat('d M Y') }}</td>
-                                        <td>{{ $item->nama_jabatan }}</td>
+                                        <td>{{ ucfirst($item->nama_jabatan) }}</td>
                                         <td>{{ $item->nama_divisi }}</td>
                                         <th>
 
@@ -95,5 +112,33 @@
 
         </div>
     </div>
+    <script>
+        document.getElementById('jabatan').addEventListener('change', function() {
+            var jabatan = this.value;
+            var url = '{{ url()->current() }}';
+            if (jabatan) {
+                url += '?jabatan=' + jabatan;
+            }
+            window.location.href = url;
+        });
+
+        // Function untuk mengupdate opsi "Semua Jabatan" berdasarkan Jabatan yang dipilih
+        function updateSemuaJabatanOption(jabatanDipilih) {
+            var opsiSemuaJabatan = document.getElementById('semua-jabatan-option');
+            if (!jabatanDipilih) {
+                opsiSemuaJabatan.selected = true;
+            }
+        }
+
+        // Panggil fungsi update "Semua Jabatan" berdasarkan Jabatan yang dipilih
+        var jabatanDipilih = new URLSearchParams(window.location.search).get('jabatan');
+        updateSemuaJabatanOption(jabatanDipilih);
+
+        // Tambahkan event listener untuk memperbarui URL saat opsi "Semua Jabatan" dipilih
+        document.getElementById('semua-jabatan-option').addEventListener('click', function() {
+            var url = '{{ url()->current() }}';
+            window.location.href = url;
+        });
+    </script>
     <!-- /.row -->
 @endsection
