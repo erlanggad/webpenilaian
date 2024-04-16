@@ -21,6 +21,10 @@ class PenilaianController extends Controller
                 # code...
                 return $this->index_karyawan($request);
                 break;
+            case 'Kepala Bagian':
+                # code...
+                return $this->index_penilaian_karyawan($request);
+                break;
             case 'Kepala Sub Bagian':
                 # code...
                 return $this->index_penilaian_karyawan($request);
@@ -60,6 +64,28 @@ class PenilaianController extends Controller
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 4);
+
+            // Terapkan filter berdasarkan bulan jika dipilih
+            // if ($bulan) {
+            //     $query->whereMonth('tanggal_pengajuan', $bulan);
+            // }
+
+            // Ambil data pengajuan cuti
+            $data['penilaian'] = $query->get();
+            $data['kriteria'] = Criteria::all();
+
+
+            // dd($data);
+
+            return view('penilaian', $data);
+        } elseif ($data['role'] == 'Kepala Bagian') {
+            // $bulan = $request->input('bulan');
+
+            // Buat query untuk pengajuan cuti
+            $query = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                ->where('pegawai.divisi_id', Session('user')['divisi'])
+                ->where('pegawai.jabatan_id', 3);
 
             // Terapkan filter berdasarkan bulan jika dipilih
             // if ($bulan) {
@@ -122,48 +148,22 @@ class PenilaianController extends Controller
 
     public function create()
     {
-        $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
-        $criteria = Criteria::all();
-        return view('form_penilaian', compact('pegawai', 'criteria'));
-    }
-
-    public function getUrgensiCuti($id)
-    {
-        $urgensi_cuti = Urgensi_Cuti::find($id);
-
-        if ($urgensi_cuti) {
-            // Data ditemukan
-            return response()->json([
-                'success' => true,
-                'data' => $urgensi_cuti
-            ]);
-        } else {
-            // Data tidak ditemukan
-            return response()->json([
-                'success' => false,
-                'message' => 'Data tidak ditemukan'
-            ], 404);
+        $data['role'] = Session('user')['role'];
+        if ($data['role'] == 'Kepala Bagian') {
+            $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 3)->get();
+            $criteria = Criteria::all();
+            return view('form_penilaian', compact('pegawai', 'criteria'));
+        } elseif ($data['role'] == 'Kepala Sub Bagian') {
+            $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+            $criteria = Criteria::all();
+            return view('form_penilaian', compact('pegawai', 'criteria'));
         }
     }
 
+
     public function store(Request $request)
     {
-        // $data = $request->all();
-        // dd($request->all());
-        // $simpan = Penilaian::create();
-        // $simpan->pegawai_id = 6;
-        // $simpan->c1 = $request->C1;
-        // $simpan->c2 = $request->C2;
-        // $simpan->c3 = $request->C3;
-        // $simpan->c4 = $request->C4;
-        // $simpan->c5 = $request->C5;
-        // $simpan->c5 = $request->C5;
-        // $simpan->c6 = $request->C6;
-        // $simpan->c7 = $request->C7;
-        // $simpan->c8 = $request->C8;
-        // // dd($simpan);
 
-        // $simpan->save();
 
         Penilaian::create([
             'pegawai_id' => $request->pegawai_id,
@@ -178,17 +178,28 @@ class PenilaianController extends Controller
             'c8' => $request->C8,
         ]);
 
-
-        return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil membuat pengajuan cuti');
+        $role = Session('user')['role'];
+        if ($role == 'Kepala Bagian') {
+            return redirect('/kepala-bagian/form-penilaian/')->with('success', 'Berhasil membuat pengajuan cuti');
+        } elseif ($role == 'Kepala Sub Bagian') {
+            return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil membuat pengajuan cuti');
+        }
     }
 
     public function edit(Request $request)
     {
+        $role = Session('user')['role'];
+
         $penilaian = Penilaian::where([
             'id' => $request->segment(3)
         ])->first();
 
-        $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        if ($role == 'Kepala Bagian') {
+
+            $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 3)->get();
+        } elseif ($role == 'Kepala Sub Bagian') {
+            $pegawai = Pegawai::join('jabatan', 'jabatan.id', '=', 'pegawai.jabatan_id')->join('divisi', 'divisi.id', '=', 'pegawai.divisi_id')->select('pegawai.*', 'divisi.nama as nama_divisi', 'jabatan.nama as nama_jabatan')->where('pegawai.divisi_id', Session('user')['divisi'])->where('pegawai.jabatan_id', 4)->get();
+        }
         $criteria = Criteria::all();
         // $divisi = Divisi::all();
         // $jabatan = Jabatan::all();
@@ -197,6 +208,8 @@ class PenilaianController extends Controller
 
     public function update(Request $request)
     {
+        $role = Session('user')['role'];
+
         $penilaian = Penilaian::where([
             'id' => $request->segment(3)
         ])->first();
@@ -219,12 +232,17 @@ class PenilaianController extends Controller
         // $pengajuan_cuti->sisa_cuti = $data_sisa_cuti->sisa_cuti - $pengajuan_cuti->lama_cuti;
 
         if ($penilaian->save()) {
-            // $data_sisa_cuti->sisa_cuti = $data_sisa_cuti->sisa_cuti - $pengajuan_cuti->lama_cuti;
-            // $data_sisa_cuti->cuti_terpakai = $data_sisa_cuti->cuti_terpakai + $pengajuan_cuti->lama_cuti;
-            // $data_sisa_cuti->save();
-            return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil memperbarui pengajuan cuti');
+            if ($role == 'Kepala Bagian') {
+                return redirect('/kepala-bagian/form-penilaian/')->with('success', 'Berhasil memperbaru penilaian');
+            } elseif ($role == 'Kepala Sub Bagian') {
+                return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil memperbaru penilaian');
+            }
         } else {
-            return redirect('/kepala-sub-bagian/form-penilaian/')->with('failed', 'Gagal memperbarui pengajuan cuti');
+            if ($role == 'Kepala Bagian') {
+                return redirect('/kepala-bagian/form-penilaian/')->with('failed', 'Gagal memperbaru penilaian');
+            } elseif ($role == 'Kepala Sub Bagian') {
+                return redirect('/kepala-sub-bagian/form-penilaian/')->with('failed', 'Gagal memperbaru penilaian');
+            }
         }
     }
 
@@ -234,12 +252,22 @@ class PenilaianController extends Controller
 
     public function destroy(Request $request)
     {
-        $pengajuan_cuti = Penilaian::find($request->segment(3));
-        // dd($pengajuan_cuti);
-        if ($pengajuan_cuti->delete()) {
-            return redirect('/kepala-sub-bagian/form-penilaian')->with('success', 'Berhasil menghapus pengajuan cuti');
+        $role = Session('user')['role'];
+
+        $penilaian = Penilaian::find($request->segment(3));
+        // dd($penilaian);
+        if ($penilaian->delete()) {
+            if ($role == 'Kepala Bagian') {
+                return redirect('/kepala-bagian/form-penilaian/')->with('success', 'Berhasil menghapus penilaian');
+            } elseif ($role == 'Kepala Sub Bagian') {
+                return redirect('/kepala-sub-bagian/form-penilaian/')->with('success', 'Berhasil menghapus penilaian');
+            }
         } else {
-            return redirect('/kepala-sub-bagian/form-penilaian')->with('failed', 'Gagal menghapus pengajuan cuti');
+            if ($role == 'Kepala Bagian') {
+                return redirect('/kepala-bagian/form-penilaian/')->with('failed', 'Gagal menghapus penilaian');
+            } elseif ($role == 'Kepala Sub Bagian') {
+                return redirect('/kepala-sub-bagian/form-penilaian/')->with('failed', 'Gagal menghapus penilaian');
+            }
         }
     }
 }

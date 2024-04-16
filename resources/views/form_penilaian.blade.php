@@ -24,62 +24,57 @@
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Form Penilaian Kinerja</h3>
                         <hr>
-                        <form class="form" action="/kepala-sub-bagian/form-penilaian/store" method="post"
-                            enctype="multipart/form-data">
-                            @csrf
-                            {{-- <div class="form-group row">
-                        <label for="example-email-input" class="col-2 col-form-label">Tanggal Awal </label>
-                        <div class="col-10">
-                            <input class="form-control" name="tanggal_pengajuan" type="date" value="" id="example-email-input" required>
+                        @if (Session('user')['role'] == 'Kepala Bagian')
+                            <form class="form" action="/kepala-bagian/form-penilaian/store" method="post"
+                                enctype="multipart/form-data">
+                            @elseif (Session('user')['role'] == 'Kepala Sub Bagian')
+                                <form class="form" action="/kepala-sub-bagian/form-penilaian/store" method="post"
+                                    enctype="multipart/form-data">
+                        @endif
+
+                        @csrf
+
+
+
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
+                            <div class="col-10">
+                                <select name="pegawai_id" class="form-control" id="pegawai_id" required>
+                                    <option value="" disabled selected>Pilih Pegawai</option>
+                                    @foreach ($pegawai as $list)
+                                        <option value="{{ $list->id }}">{{ $list->nama_pegawai }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
                         </div>
-                    </div> --}}
-                            {{-- <div class="form-group row">
-                        <label for="example-email-input" class="col-2 col-form-label">Tanggal Akhir </label>
-                        <div class="col-10">
-                            <input class="form-control" name="tanggal_akhir" type="date" value="" id="example-email-input" required>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
+                            <div class="col-10">
+                                <input class="form-control" name="periode" type="number" min="1" value=""
+                                    id="periode" required placeholder="Contoh : 2024">
+                            </div>
                         </div>
-                    </div> --}}
-
-
+                        @foreach ($criteria as $criterias)
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
+                                <label for="example-email-input" class="col-2 col-form-label">Nilai
+                                    {{ $criterias->information }} ({{ $criterias->criteria }})</label>
                                 <div class="col-10">
-                                    <select name="pegawai_id" class="form-control" id="pegawai_id" required>
-                                        <option value="" disabled selected>Pilih Pegawai</option>
-                                        @foreach ($pegawai as $list)
-                                            <option value="{{ $list->id }}">{{ $list->nama_pegawai }}</option>
-                                        @endforeach
-
-                                    </select>
+                                    <input class="form-control" name="{{ $criterias->criteria }}" type="number"
+                                        min="1" max="100" value="0" id="{{ $criterias->criteria }}"
+                                        required>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
-                                <div class="col-10">
-                                    <input class="form-control" name="periode" type="number" min="1" value=""
-                                        id="periode" required placeholder="Contoh : 2024">
-                                </div>
+                        @endforeach
+
+
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <button class="btn btn-primary btn-block" type="submit">Kirim</button>
                             </div>
-                            @foreach ($criteria as $criterias)
-                                <div class="form-group row">
-                                    <label for="example-email-input" class="col-2 col-form-label">Nilai
-                                        {{ $criterias->information }} ({{ $criterias->criteria }})</label>
-                                    <div class="col-10">
-                                        <input class="form-control" name="{{ $criterias->criteria }}" type="number"
-                                            min="1" max="100" value="0" id="{{ $criterias->criteria }}"
-                                            required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-
-                                    <button class="btn btn-primary btn-block" type="submit">Kirim</button>
-                                </div>
-                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -92,57 +87,62 @@
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Form Penilaian Kinerja</h3>
                         <hr>
-                        <form class="form" action="/kepala-sub-bagian/form-penilaian/{{ Request::segment(3) }}"
-                            method="post" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
+                        @if (Session('user')['role'] == 'Kepala Bagian')
+                            <form class="form" action="/kepala-bagian/form-penilaian/{{ Request::segment(3) }}"
+                                method="post" enctype="multipart/form-data">
+                            @elseif (Session('user')['role'] == 'Kepala Sub Bagian')
+                                <form class="form" action="/kepala-sub-bagian/form-penilaian/{{ Request::segment(3) }}"
+                                    method="post" enctype="multipart/form-data">
+                        @endif
+                        @csrf
+                        @method('PUT')
 
 
 
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
+                            <div class="col-10">
+                                <select name="pegawai_id" class="form-control" id="pegawai_id" required>
+                                    <option value="" disabled selected>Pilih Pegawai</option>
+
+
+                                    @foreach ($pegawai as $list)
+                                        <option value="{{ $list->id }}"
+                                            {{ $list->id == $penilaian->pegawai_id ? 'selected' : '' }}>
+                                            {{ $list->nama_pegawai }}</option>
+                                    @endforeach
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
+                            <div class="col-10">
+                                <input class="form-control" name="periode" type="number" min="1"
+                                    value="{{ $penilaian->periode }}" id="periode" required>
+                            </div>
+                        </div>
+                        @foreach ($criteria as $criterias)
                             <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
+                                <label for="example-email-input" class="col-2 col-form-label">Nilai
+                                    {{ $criterias->information }} ({{ $criterias->criteria }})</label>
                                 <div class="col-10">
-                                    <select name="pegawai_id" class="form-control" id="pegawai_id" required>
-                                        <option value="" disabled selected>Pilih Pegawai</option>
-
-
-                                        @foreach ($pegawai as $list)
-                                            <option value="{{ $list->id }}"
-                                                {{ $list->id == $penilaian->pegawai_id ? 'selected' : '' }}>
-                                                {{ $list->nama_pegawai }}</option>
-                                        @endforeach
-
-                                    </select>
+                                    <input class="form-control" name="{{ $criterias->criteria }}" type="number"
+                                        min="1" max="100"
+                                        value="{{ $penilaian->{strtolower($criterias->criteria)} ?? 0 }}"
+                                        id="{{ $criterias->criteria }}" required>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
-                                <div class="col-10">
-                                    <input class="form-control" name="periode" type="number" min="1" max="100"
-                                        value="{{ $penilaian->periode }}" id="periode" required>
-                                </div>
+                        @endforeach
+
+
+
+                        <div class="form-group row">
+                            <div class="col-md-12">
+
+                                <button class="btn btn-primary btn-block" type="submit">Kirim</button>
                             </div>
-                            @foreach ($criteria as $criterias)
-                                <div class="form-group row">
-                                    <label for="example-email-input" class="col-2 col-form-label">Nilai
-                                        {{ $criterias->information }} ({{ $criterias->criteria }})</label>
-                                    <div class="col-10">
-                                        <input class="form-control" name="{{ $criterias->criteria }}" type="number"
-                                            min="1" max="100"
-                                            value="{{ $penilaian->{strtolower($criterias->criteria)} ?? 0 }}"
-                                            id="{{ $criterias->criteria }}" required>
-                                    </div>
-                                </div>
-                            @endforeach
-
-
-
-                            <div class="form-group row">
-                                <div class="col-md-12">
-
-                                    <button class="btn btn-primary btn-block" type="submit">Kirim</button>
-                                </div>
-                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>

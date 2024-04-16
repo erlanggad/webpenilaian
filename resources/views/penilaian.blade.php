@@ -24,7 +24,11 @@
             </div>
             <!-- /.col-lg-12 -->
             <div class="col-md-12">
-                @if ($role != 'karyawan' || $role != 'Karyawan')
+                @if ($role == 'Kepala Bagian')
+                    <a href="/kepala-bagian/form-penilaian/create">
+                        <button class="btn btn-primary btn-block" style="background-color: #1E90FF">Tambah</button>
+                    </a>
+                @elseif ($role == 'Kepala Sub Bagian')
                     <a href="/kepala-sub-bagian/form-penilaian/create">
                         <button class="btn btn-primary btn-block" style="background-color: #1E90FF">Tambah</button>
                     </a>
@@ -37,10 +41,9 @@
                 <div class="white-box">
                     <h3 class="box-title m-b-0">Data Penilaian Kinerja Karyawan</h3>
                     <div class="col-md-4"></div>
-                    <div class="col-md-3 mb-4">
+                    {{-- <div class="col-md-3 mb-4">
                         <label for="bulan">Filter Bulans:</label>
                         <select class="form-control" id="bulan" name="bulan">
-                            {{-- <option value="">Semua Bulan</option> --}}
                             <option id="semua-bulan-option" value="" {{ request('bulan') == '' ? 'selected' : '' }}>
                                 Semua Bulan</option>
                             <option value="01" {{ request('bulan') == '01' ? 'selected' : '' }}>Januari</option>
@@ -56,9 +59,8 @@
                             <option value="11" {{ request('bulan') == '11' ? 'selected' : '' }}>November</option>
                             <option value="12" {{ request('bulan') == '12' ? 'selected' : '' }}>Desember</option>
 
-                            <!-- Tambahkan opsi untuk bulan-bulan lainnya sesuai kebutuhan -->
                         </select>
-                    </div>
+                    </div> --}}
                     <div class="table-responsive">
                         <table id="myTable" class="table table-striped">
                             <thead>
@@ -111,6 +113,20 @@
                                                 </a>
                                                 <form class="ml-auto mr-auto mt-3" method="POST"
                                                     action="/kepala-sub-bagian/form-penilaian/{{ $item->id }}'">
+                                                    {{ csrf_field() }}
+                                                    @method('DELETE')
+
+                                                    <button class="btn btn-danger ml-auto mr-auto">Delete</button>
+                                                </form>
+                                            </th>
+                                        @elseif (in_array($role, ['Kepala Bagian']))
+                                            <th>
+                                                <a class="ml-auto mr-auto"
+                                                    href="/kepala-bagian/form-penilaian/{{ $item->id }}/edit">
+                                                    <button class="btn btn-warning ml-auto mr-auto">Edit</button>
+                                                </a>
+                                                <form class="ml-auto mr-auto mt-3" method="POST"
+                                                    action="/kepala-bagian/form-penilaian/{{ $item->id }}'">
                                                     {{ csrf_field() }}
                                                     @method('DELETE')
 

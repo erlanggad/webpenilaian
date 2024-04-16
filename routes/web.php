@@ -195,6 +195,8 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
 
     // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir'])->name('cuti_non.indexHasilAkhirManager');
 
+    Route::resource('form-penilaian', PenilaianController::class);
+    Route::post('form-penilaian/store', [PenilaianController::class, 'store']);
 
     Route::get('konversi-alternatif-waspas', [PerhitunganWaspasController::class, 'index']);
     Route::get('hasil-normalisasi-waspas', [PerhitunganWaspasController::class, 'normalisasi']);
