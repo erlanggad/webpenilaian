@@ -213,6 +213,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     Route::get('hasil-solusi-ideal-topsis', [PerhitunganTopsisController::class, 'hasil_solusi_ideal']);
 
     Route::get('hasil-akhir-topsis', [PerhitunganTopsisController::class, 'hasil_akhir']);
+    Route::get('ranking', [RankingController::class, 'index']);
 });
 
 //staf kepala sub bagian

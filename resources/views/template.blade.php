@@ -220,6 +220,11 @@
                                 </li>
                             </ul>
                         </li>
+                        <li> <a href="/kepala-bagian/ranking" class="waves-effect ">
+                                <i class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu">Ranking
+                                    Penilaian Kinerja </span>
+                            </a>
+                        </li>
                     @elseif (Session('user')['role'] == 'Kepala Sub Bagian')
                         <li> <a href="/kepala-sub-bagian/home" class="waves-effect "><i
                                     class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu">
@@ -316,7 +321,7 @@
                             </ul>
                         </li>
                         <li> <a href="/kepala-sub-bagian/ranking" class="waves-effect "><i
-                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Form
+                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu">
                                     Ranking Penilaian Kinerja </span></a></li>
                     @elseif (Session('user')['role'] == 'karyawan' || Session('user')['role'] == 'Karyawan')
                         <li> <a href="/karyawan/home" class="waves-effect "><i
