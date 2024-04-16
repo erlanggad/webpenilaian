@@ -23,4 +23,14 @@ class Penilaian extends Model
         'c7',
         'c8',
     ];
+
+    // Method untuk mengambil tahun-tahun unik dari kolom 'periode'
+    public static function getUniqueYears()
+    {
+        return Penilaian::selectRaw('periode')
+            ->distinct()
+            ->pluck('periode')
+            ->filter()
+            ->toArray();
+    }
 }

@@ -13,16 +13,17 @@ use Illuminate\Contracts\Session\Session;
 
 class RankingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // dd($request->tahun);
         $perhitunganMooraController = new PerhitunganMooraController();
-        $moora = $perhitunganMooraController->data_hasil_akhir();
+        $moora = $perhitunganMooraController->data_hasil_akhir($request->tahun);
 
         $perhitunganWaspasController = new PerhitunganWaspasController();
-        $waspas = $perhitunganWaspasController->data_hasil_akhir();
+        $waspas = $perhitunganWaspasController->data_hasil_akhir($request->tahun);
 
         $perhitunganTopsisController = new PerhitunganTopsisController();
-        $topsis = $perhitunganTopsisController->data_hasil_akhir();
+        $topsis = $perhitunganTopsisController->data_hasil_akhir($request->tahun);
 
         $data['topsis'] = $topsis;
         $data['waspas'] = $waspas;

@@ -5,9 +5,25 @@
 @section('konten')
     <div class="container-fluid">
         <div class="row bg-title">
-            <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-12">
                 <h4 class="page-title">Ranking Penilaian Kinerja</h4>
+                <div class="col-md-3 mb-4">
+                    <label for="tahun">Filter Periode Tahun</label>
+                    @php
+                        use App\Models\Penilaian;
+
+                        $uniqueYears = Penilaian::getUniqueYears();
+                    @endphp
+                    <select class="form-control" id="tahun" name="tahun">
+                        <option value="" id="semua-tahun-option" selected disabled>Pilih Tahun</option>
+                        @foreach ($uniqueYears as $listYear)
+                            <option value="{{ $listYear }}" {{ request('tahun') == $listYear ? 'selected' : '' }}>
+                                {{ $listYear }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if (Session::has('success'))
                     <div class="alert alert-success alert-dismissable">
@@ -23,34 +39,15 @@
                 @endif
             </div>
             <!-- /.col-lg-12 -->
-
         </div>
+
         <!-- /row -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Topsis</h2>
                     <div class="col-md-4"></div>
-                    {{-- <div class="col-md-3 mb-4">
-                        <label for="bulan">Filter Bulans:</label>
-                        <select class="form-control" id="bulan" name="bulan">
-                            <option id="semua-bulan-option" value="" {{ request('bulan') == '' ? 'selected' : '' }}>
-                                Semua Bulan</option>
-                            <option value="01" {{ request('bulan') == '01' ? 'selected' : '' }}>Januari</option>
-                            <option value="02" {{ request('bulan') == '02' ? 'selected' : '' }}>Februari</option>
-                            <option value="03" {{ request('bulan') == '03' ? 'selected' : '' }}>Maret</option>
-                            <option value="04" {{ request('bulan') == '04' ? 'selected' : '' }}>April</option>
-                            <option value="05" {{ request('bulan') == '05' ? 'selected' : '' }}>Mei</option>
-                            <option value="06" {{ request('bulan') == '06' ? 'selected' : '' }}>Juni</option>
-                            <option value="07" {{ request('bulan') == '07' ? 'selected' : '' }}>Juli</option>
-                            <option value="08" {{ request('bulan') == '08' ? 'selected' : '' }}>Agustus</option>
-                            <option value="09" {{ request('bulan') == '09' ? 'selected' : '' }}>September</option>
-                            <option value="10" {{ request('bulan') == '10' ? 'selected' : '' }}>Oktober</option>
-                            <option value="11" {{ request('bulan') == '11' ? 'selected' : '' }}>November</option>
-                            <option value="12" {{ request('bulan') == '12' ? 'selected' : '' }}>Desember</option>
 
-                        </select>
-                    </div> --}}
                     <div class="table-responsive">
                         <table id="myTable" class="table table-striped">
                             <thead>
@@ -58,11 +55,13 @@
                                     <th>No</th>
                                     <th>Nama Karyawan</th>
                                     <th>Skor Akhir</th>
-                                    {{-- <th>Verifikasi Oleh</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
+
+
+
                                 @foreach ($topsis as $item)
                                     <tr>
                                         <td>{{ $no }}</td>
@@ -76,6 +75,7 @@
                                     </tr>
                                     <?php $no++; ?>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -89,26 +89,7 @@
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Moora</h2>
                     <div class="col-md-4"></div>
-                    {{-- <div class="col-md-3 mb-4">
-                        <label for="bulan">Filter Bulans:</label>
-                        <select class="form-control" id="bulan" name="bulan">
-                            <option id="semua-bulan-option" value="" {{ request('bulan') == '' ? 'selected' : '' }}>
-                                Semua Bulan</option>
-                            <option value="01" {{ request('bulan') == '01' ? 'selected' : '' }}>Januari</option>
-                            <option value="02" {{ request('bulan') == '02' ? 'selected' : '' }}>Februari</option>
-                            <option value="03" {{ request('bulan') == '03' ? 'selected' : '' }}>Maret</option>
-                            <option value="04" {{ request('bulan') == '04' ? 'selected' : '' }}>April</option>
-                            <option value="05" {{ request('bulan') == '05' ? 'selected' : '' }}>Mei</option>
-                            <option value="06" {{ request('bulan') == '06' ? 'selected' : '' }}>Juni</option>
-                            <option value="07" {{ request('bulan') == '07' ? 'selected' : '' }}>Juli</option>
-                            <option value="08" {{ request('bulan') == '08' ? 'selected' : '' }}>Agustus</option>
-                            <option value="09" {{ request('bulan') == '09' ? 'selected' : '' }}>September</option>
-                            <option value="10" {{ request('bulan') == '10' ? 'selected' : '' }}>Oktober</option>
-                            <option value="11" {{ request('bulan') == '11' ? 'selected' : '' }}>November</option>
-                            <option value="12" {{ request('bulan') == '12' ? 'selected' : '' }}>Desember</option>
 
-                        </select>
-                    </div> --}}
                     <div class="table-responsive">
                         <table id="myTable" class="table table-striped">
                             <thead>
@@ -121,19 +102,28 @@
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
-                                @foreach ($moora as $item)
+
+                                @if (request('tahun'))
+
+                                    @foreach ($moora as $item)
+                                        <tr>
+                                            <td>{{ $no }}</td>
+                                            <td>{{ $item['nama'] }}</td>
+                                            <td>
+                                                {{ $item['skor_akhir'] }}
+                                            </td>
+
+                                            {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
+
+                                        </tr>
+                                        <?php $no++; ?>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>{{ $no }}</td>
-                                        <td>{{ $item['nama'] }}</td>
-                                        <td>
-                                            {{ $item['skor_akhir'] }}
+                                        <td colspan="3" class="text-center"> No data available in table
                                         </td>
-
-                                        {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
-
                                     </tr>
-                                    <?php $no++; ?>
-                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -147,26 +137,7 @@
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Waspas</h2>
                     <div class="col-md-4"></div>
-                    {{-- <div class="col-md-3 mb-4">
-                        <label for="bulan">Filter Bulans:</label>
-                        <select class="form-control" id="bulan" name="bulan">
-                            <option id="semua-bulan-option" value="" {{ request('bulan') == '' ? 'selected' : '' }}>
-                                Semua Bulan</option>
-                            <option value="01" {{ request('bulan') == '01' ? 'selected' : '' }}>Januari</option>
-                            <option value="02" {{ request('bulan') == '02' ? 'selected' : '' }}>Februari</option>
-                            <option value="03" {{ request('bulan') == '03' ? 'selected' : '' }}>Maret</option>
-                            <option value="04" {{ request('bulan') == '04' ? 'selected' : '' }}>April</option>
-                            <option value="05" {{ request('bulan') == '05' ? 'selected' : '' }}>Mei</option>
-                            <option value="06" {{ request('bulan') == '06' ? 'selected' : '' }}>Juni</option>
-                            <option value="07" {{ request('bulan') == '07' ? 'selected' : '' }}>Juli</option>
-                            <option value="08" {{ request('bulan') == '08' ? 'selected' : '' }}>Agustus</option>
-                            <option value="09" {{ request('bulan') == '09' ? 'selected' : '' }}>September</option>
-                            <option value="10" {{ request('bulan') == '10' ? 'selected' : '' }}>Oktober</option>
-                            <option value="11" {{ request('bulan') == '11' ? 'selected' : '' }}>November</option>
-                            <option value="12" {{ request('bulan') == '12' ? 'selected' : '' }}>Desember</option>
 
-                        </select>
-                    </div> --}}
                     <div class="table-responsive">
                         <table id="myTable" class="table table-striped">
                             <thead>
@@ -179,19 +150,27 @@
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
-                                @foreach ($waspas as $item)
+                                @if (request('tahun'))
+                                    @foreach ($waspas as $item)
+                                        <tr>
+                                            <td>{{ $no }}</td>
+                                            <td>{{ $item['nama'] }}</td>
+                                            <td>
+                                                {{ $item['skor_akhir'] }}
+                                            </td>
+
+                                            {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
+
+                                        </tr>
+                                        <?php $no++; ?>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>{{ $no }}</td>
-                                        <td>{{ $item['nama'] }}</td>
-                                        <td>
-                                            {{ $item['skor_akhir'] }}
+                                        <td colspan="3" class="text-center"> No data available in table
                                         </td>
-
-                                        {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
-
                                     </tr>
-                                    <?php $no++; ?>
-                                @endforeach
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
@@ -202,28 +181,33 @@
     </div>
     <!-- Tambahkan bagian JavaScript di bawah dropdown -->
     <script>
-        // document.getElementById('bulan').addEventListener('change', function() {
-        //     var bulan = this.value;
-        //     var url =
+        document.getElementById('tahun').addEventListener('change', function() {
+            var tahun = this.value;
+            var url = '{{ url()->current() }}';
+            if (tahun) {
+                url += '?tahun=' + tahun;
+            }
+            window.location.href = url;
+        });
 
+        // Function untuk mengupdate opsi "Semua Tahun" berdasarkan tahun yang dipilih
+        function updateSemuaTahunOption(tahunDipilih) {
+            var opsiSemuaTahun = document.getElementById('semua-tahun-option');
+            if (!tahunDipilih) {
+                opsiSemuaTahun.selected = true;
+            }
+        }
 
-        //     if (bulan) {
-        //         url += "?bulan=" + bulan;
-        //     }
-        //     window.location.href = url;
-        // });
+        // Panggil fungsi update "Semua Tahun" berdasarkan tahun yang dipilih
+        var tahunDipilih = new URLSearchParams(window.location.search).get('tahun');
+        updateSemuaTahunOption(tahunDipilih);
 
-        // // Function to update the "Semua Tahun" option based on the selected year
-        // function updateSemuaTahunOption(selectedYear) {
-        //     var semuaTahunOption = document.getElementById('semua-bulan-option');
-        //     if (!selectedYear) {
-        //         semuaTahunOption.selected = true;
-        //     }
-        // }
-
-        // // Initial call to update the "Semua Tahun" option based on the selected year
-        // var selectedYear = new URLSearchParams(window.location.search).get('bulan');
-        // updateSemuaTahunOption(selectedYear);
+        // Tambahkan event listener untuk memperbarui URL saat opsi "Semua Tahun" dipilih
+        document.getElementById('semua-tahun-option').addEventListener('click', function() {
+            var url = '{{ url()->current() }}';
+            window.location.href = url;
+        });
     </script>
+
     <!-- /.row -->
 @endsection
