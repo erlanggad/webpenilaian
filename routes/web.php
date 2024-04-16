@@ -54,31 +54,6 @@ Route::post('/reset-password-action', [Forgot_Password::class, 'resetPassword'])
 //admin
 Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
     Route::get('/home', [Home::class, 'index']);
-    Route::resource('/manage-pejabat-struktural', Manage_staf_hr::class);
-    // Route::resource('/manage-pengajuan-cuti', Manage_pengajuan_cuti::class);
-    Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index'])->name('manage_pengajuan_cuti.indexAdmin');
-
-    // Route untuk menyimpan data pengajuan cuti
-    Route::post('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'store'])->name('manage_pengajuan_cuti.store');
-
-    // Route untuk menampilkan halaman form pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/create', [Manage_pengajuan_cuti::class, 'create'])->name('manage_pengajuan_cuti.create');
-
-    // Route untuk menampilkan halaman edit pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/edit', [Manage_pengajuan_cuti::class, 'edit'])->name('manage_pengajuan_cuti.edit');
-
-    // Route untuk mengupdate data pengajuan cuti
-    Route::put('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'update'])->name('manage_pengajuan_cuti.update');
-
-    // Route untuk menghapus data pengajuan cuti
-    Route::delete('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'destroy'])->name('manage_pengajuan_cuti.destroy');
-
-    // Route untuk menampilkan halaman print
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/print', [Manage_pengajuan_cuti::class, 'print'])->name('manage_pengajuan_cuti.print');
-
-    // Route untuk menampilkan halaman detail pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'show'])->name('manage_pengajuan_cuti.show');
-    // Route::resource('/cuti-non-tahunan', Cuti_non::class);
     Route::resource('/konfigurasi-cuti', Konfigurasi_cuti::class);
     Route::resource('/manage-karyawan', Manage_karyawan::class);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.indexAdmin');
@@ -94,60 +69,13 @@ Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
 //staf direktur
 Route::middleware(['authDirektur'])->prefix('direktur')->group(function () {
     Route::get('/home', [Home::class, 'index']);
-    // Route::resource('/manage-pengajuan-cuti', Manage_pengajuan_cuti::class);
-    // Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index_pengelolaa'])->name('manage_pengajuan_cuti.index_pengelolaa');
-    // Route::resource('/cuti-non-tahunan', Cuti_non::class);
-
-    // Route untuk menampilkan halaman index pengelola
-    Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index'])->name('manage_pengajuan_cuti.indexManager');
-
-    // Route untuk menyimpan data pengajuan cuti
-    Route::post('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'store'])->name('manage_pengajuan_cuti.store');
-
-    // Route untuk menampilkan halaman form pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/create', [Manage_pengajuan_cuti::class, 'create'])->name('manage_pengajuan_cuti.create');
-
-    // Route untuk menampilkan halaman edit pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/edit', [Manage_pengajuan_cuti::class, 'edit'])->name('manage_pengajuan_cuti.edit');
-
-    // Route untuk mengupdate data pengajuan cuti
-    Route::put('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'update'])->name('manage_pengajuan_cuti.update');
-
-    // Route untuk menghapus data pengajuan cuti
-    Route::delete('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'destroy'])->name('manage_pengajuan_cuti.destroy');
-
-    // Route untuk menampilkan halaman print
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/print', [Manage_pengajuan_cuti::class, 'print'])->name('manage_pengajuan_cuti.print');
-
-
-    // Route untuk menampilkan halaman detail pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'show'])->name('manage_pengajuan_cuti.show');
-
-    Route::resource('/konfigurasi-cuti', Konfigurasi_cuti::class);
     Route::resource('/manage-karyawan', Manage_karyawan::class);
-    // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
-    Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.index');
-
-    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
-    // Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
-    // // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
-    // Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
-    // Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
-    // Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
-
-    Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
-    Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
-    // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class,'hasil_akhir']);
-
-    Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir'])->name('cuti_non.indexHasilAkhirManager');
 });
 
 //staf kepala bagian
 Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function () {
     Route::get('/home', [Home::class, 'index']);
-    // Route::resource('/manage-pengajuan-cuti', Manage_pengajuan_cuti::class);
-    // Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index_pengelolaa'])->name('manage_pengajuan_cuti.index_pengelolaa');
-    // Route::resource('/cuti-non-tahunan', Cuti_non::class);
+
 
     // Route untuk menampilkan halaman index pengelola
     Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index'])->name('manage_pengajuan_cuti.indexManager');
@@ -182,18 +110,7 @@ Route::middleware(['authKepalaBagian'])->prefix('kepala-bagian')->group(function
     // Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class,'index']);
     Route::get('/rekap-pengajuan-cuti', [Rekap_pengajuan_cuti::class, 'index'])->name('rekap_pengajuan_cuti.index');
 
-    // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexManager');
-    // Route::get('/cuti-non-tahunan/create', [Cuti_non::class, 'create'])->name('cuti_non.create');
-    // // Route::post('/cuti-non-tahunan', [Cuti_non::class, 'store'])->name('cuti_non.store');
-    // Route::get('/cuti-non-tahunan/{id}/edit', [Cuti_non::class, 'edit'])->name('cuti_non.edit');
-    // Route::put('/cuti-non-tahunan/{id}', [Cuti_non::class, 'update'])->name('cuti_non.update');
-    // Route::delete('/cuti-non-tahunan/{id}', [Cuti_non::class, 'destroy'])->name('cuti_non.destroy');
 
-    // Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
-    // Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
-    // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class,'hasil_akhir']);
-
-    // Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir'])->name('cuti_non.indexHasilAkhirManager');
 
     Route::resource('form-penilaian', PenilaianController::class);
     Route::post('form-penilaian/store', [PenilaianController::class, 'store']);
