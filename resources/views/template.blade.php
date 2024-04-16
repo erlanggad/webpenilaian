@@ -327,12 +327,9 @@
                         <li> <a href="/karyawan/home" class="waves-effect "><i
                                     class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu">
                                     Home </span></a></li>
-                        <li> <a href="/karyawan/manage-pengajuan-cuti" class="waves-effect "><i
-                                    class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Cuti
-                                    Tahunan </span></a></li>
-                        <li> <a href="/karyawan/cuti-non-tahunan" class="waves-effect "><i
-                                    class="zmdi zmdi-settings zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Cuti
-                                    Diluar Cuti Tahunan </span></a></li>
+                        <li> <a href="/karyawan/form-penilaian" class="waves-effect "><i
+                                    class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Form
+                                    Penilaian Kepala Sub Bagian </span></a></li>
                     @endif
 
                 </ul>

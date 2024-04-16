@@ -63,7 +63,8 @@ class PenilaianController extends Controller
             $query = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
-                ->where('pegawai.jabatan_id', 4);
+                ->where('pegawai.jabatan_id', 4)
+                ->orderBy('periode', 'desc');
 
             // Terapkan filter berdasarkan bulan jika dipilih
             // if ($bulan) {
@@ -85,7 +86,9 @@ class PenilaianController extends Controller
             $query = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
-                ->where('pegawai.jabatan_id', 3);
+                ->where('pegawai.jabatan_id', 3)
+                ->orderBy('periode', 'desc');
+
 
             // Terapkan filter berdasarkan bulan jika dipilih
             // if ($bulan) {
@@ -129,21 +132,25 @@ class PenilaianController extends Controller
 
         // return view('pengajuan_cuti_non', $data);
 
-        $bulan = $request->input('bulan');
+        $query = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+            ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+            ->where('penilaian.pegawai_id', $id_karyawan)
+            ->orderBy('periode', 'desc');
 
-        // Buat query untuk pengajuan cuti
-        $query = Pengajuan_cuti_non::join('pegawai', 'pegawai.id', '=', 'cuti_non.pegawai_id')
-            ->where(['pegawai_id' => $id_karyawan]);
 
         // Terapkan filter berdasarkan bulan jika dipilih
-        if ($bulan) {
-            $query->whereMonth('tanggal_pengajuan', $bulan);
-        }
+        // if ($bulan) {
+        //     $query->whereMonth('tanggal_pengajuan', $bulan);
+        // }
 
         // Ambil data pengajuan cuti
-        $data['cuti_non'] = $query->get();
+        $data['penilaian'] = $query->get();
+        $data['kriteria'] = Criteria::all();
 
-        return view('pengajuan_cuti_non', $data);
+
+        // dd($data);
+
+        return view('penilaian', $data);
     }
 
     public function create()

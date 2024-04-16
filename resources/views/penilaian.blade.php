@@ -70,7 +70,7 @@
                                     @foreach ($kriteria as $list)
                                         <th>{{ $list->criteria }}</th>
                                     @endforeach
-                                    {{-- <th>Verifikasi Oleh</th> --}}
+                                    <th>Periode</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -103,6 +103,9 @@
                                         </td>
                                         <td>
                                             {{ $item->c8 }}
+                                        </td>
+                                        <td>
+                                            {{ $item->periode }}
                                         </td>
                                         {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
                                         @if (in_array($role, ['Kepala Sub Bagian']))
@@ -137,24 +140,14 @@
                                         @if (in_array($role, ['karyawan']))
                                             <th>
 
-                                                @if ($item->status == 'verifikasi')
-                                                    <form class="ml-auto mr-auto mt-3" method="POST"
-                                                        action="/{{ Session('user')['role'] . '/cuti-non-tahunan/' . $item->id_cuti_non }}">
-                                                        {{ csrf_field() }}
-                                                        @method('DELETE')
 
-                                                        <button class="btn btn-danger ml-auto mr-auto">Delete</button>
-                                                    </form>
-                                                @endif
 
-                                                @if ($item->status == 'disetujui')
-                                                    @if (in_array($role, ['karyawan']))
-                                                        <a class="ml-auto mr-auto" target = "_blank"
-                                                            href="/{{ Session('user')['role'] === 'Karyawan' ? 'karyawan' : Session('user')['role'] }}/print-non-tahunan/{{ $item->id_cuti_non }}">
-                                                            <button class="btn btn-success ml-auto mr-auto">Print</button>
-                                                        </a>
-                                                    @endif
-                                                @endif
+
+                                                {{-- <a class="ml-auto mr-auto" target = "_blank"
+                                                    href="/{{ Session('user')['role'] === 'Karyawan' ? 'karyawan' : Session('user')['role'] }}/print-non-tahunan/{{ $item->id_cuti_non }}">
+                                                    <button class="btn btn-success ml-auto mr-auto">Print</button>
+                                                </a> --}}
+
                                             </th>
                                         @endif
                                     </tr>

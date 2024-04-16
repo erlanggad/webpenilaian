@@ -248,34 +248,9 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
 //karyawan
 Route::middleware(['authKaryawan'])->prefix('karyawan')->group(function () {
     Route::get('/home', [Home::class, 'index']);
-    Route::post('/store-pengajuan', [Manage_pengajuan_cuti::class, 'store']);
-    // Route::resource('/manage-pengajuan-cuti', Manage_pengajuan_cuti::class);
-
-    Route::get('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'index'])->name('manage_pengajuan_cuti.indexKaryawan');
-
-    // Route untuk menyimpan data pengajuan cuti
-    Route::post('/manage-pengajuan-cuti', [Manage_pengajuan_cuti::class, 'store'])->name('manage_pengajuan_cuti.store');
-
-    // Route untuk menampilkan halaman form pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/create', [Manage_pengajuan_cuti::class, 'create'])->name('manage_pengajuan_cuti.create');
-
-    // Route untuk menampilkan halaman edit pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/edit', [Manage_pengajuan_cuti::class, 'edit'])->name('manage_pengajuan_cuti.edit');
-
-    // Route untuk mengupdate data pengajuan cuti
-    Route::put('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'update'])->name('manage_pengajuan_cuti.update');
-
-    // Route untuk menghapus data pengajuan cuti
-    Route::delete('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'destroy'])->name('manage_pengajuan_cuti.destroy');
-
-    // Route untuk menampilkan halaman print
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}/print', [Manage_pengajuan_cuti::class, 'print'])->name('manage_pengajuan_cuti.print');
-
-    // Route untuk menampilkan halaman detail pengajuan cuti
-    Route::get('/manage-pengajuan-cuti/{id_pengajuan_cuti}', [Manage_pengajuan_cuti::class, 'show'])->name('manage_pengajuan_cuti.show');
+    Route::resource('/form-penilaian', PenilaianController::class);
 
 
-    Route::resource('/print-tahunan', Print_tahunan::class);
     // Route::resource('/cuti-non-tahunan', Cuti_non::class);
 
     // Route::get('/cuti-non-tahunan', [Cuti_non::class, 'index'])->name('cuti_non.indexKaryawan');
