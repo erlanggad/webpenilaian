@@ -24,12 +24,15 @@ class PerhitunganWaspasController extends Controller
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
+                ->where('periode', 2024)
                 ->get();
         } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
             $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 4)
+                ->where('periode', 2024)
+
                 ->get();
         }
 
@@ -51,12 +54,15 @@ class PerhitunganWaspasController extends Controller
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
+                ->where('periode', 2024)
+
                 ->get();
         } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
             $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 4)
+                ->where('periode', 2024)
                 ->get();
         }
 
@@ -131,12 +137,15 @@ class PerhitunganWaspasController extends Controller
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 3)
+                ->where('periode', 2024)
+
                 ->get();
         } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
             $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                 ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                 ->where('pegawai.divisi_id', Session('user')['divisi'])
                 ->where('pegawai.jabatan_id', 4)
+                ->where('periode', 2024)
                 ->get();
         }
 
@@ -244,6 +253,7 @@ class PerhitunganWaspasController extends Controller
                     ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                     ->where('pegawai.divisi_id', Session('user')['divisi'])
                     ->where('pegawai.jabatan_id', 3)
+
                     ->where('periode', $tahun)
 
                     ->get();
