@@ -32,7 +32,7 @@ class Home extends Controller
                 break;
             case 'Direktur':
                 # code...
-                return $this->index_direktur($request);
+                return $this->index_admin($request);
                 break;
             case 'admin':
                 # code...

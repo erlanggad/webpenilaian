@@ -119,6 +119,11 @@
                         <li> <a href="/admin/manage-karyawan" class="waves-effect "><i
                                     class="zmdi zmdi-account zmdi-hc-fw fa-fw"></i> <span class="hide-menu"> Kelola
                                     Karyawan </span></a></li>
+                    @elseif (Session('user')['role'] == 'Direktur')
+                        <li> <a href="/admin/home" class="waves-effect "><i
+                                    class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu">
+                                    Home
+                                </span></a></li>
                     @elseif (Session('user')['role'] == 'Kepala Bagian')
                         <li> <a href="/kepala-bagian/home" class="waves-effect "><i
                                     class="zmdi zmdi-view-dashboard zmdi-hc-fw fa-fw"></i> <span class="hide-menu">
