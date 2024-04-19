@@ -29,7 +29,7 @@
                         <label for="tahun">Filter Jabatan</label>
                         @php
 
-                            $jabatan = Jabatan::where('id', '!=', 1)->get();
+                            $jabatan = Jabatan::whereNotIn('id', [1, 2])->get();
 
                         @endphp
                         <select class="form-control" id="jabatan" name="jabatan">
