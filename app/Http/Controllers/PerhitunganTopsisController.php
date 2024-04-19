@@ -624,7 +624,7 @@ class PerhitunganTopsisController extends Controller
         return view('hasil_akhir_topsis', ['data' => $hasil_akhir]);
     }
 
-    public function data_hasil_akhir($tahun)
+    public function data_hasil_akhir($jabatan, $tahun)
 
     {
 
@@ -646,6 +646,14 @@ class PerhitunganTopsisController extends Controller
                     ->where('periode', $tahun)
 
                     ->get();
+            } else {
+                if ($jabatan) {
+                    $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                        ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                        ->where('pegawai.jabatan_id', $jabatan)
+                        ->where('periode', $tahun)
+                        ->get();
+                }
             }
 
             $jumlah_kuadrat_c1 = 0;

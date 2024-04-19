@@ -17,13 +17,13 @@ class RankingController extends Controller
     {
         // dd($request->tahun);
         $perhitunganMooraController = new PerhitunganMooraController();
-        $moora = $perhitunganMooraController->data_hasil_akhir($request->tahun);
+        $moora = $perhitunganMooraController->data_hasil_akhir($request->jabatan, $request->tahun);
 
         $perhitunganWaspasController = new PerhitunganWaspasController();
-        $waspas = $perhitunganWaspasController->data_hasil_akhir($request->tahun);
+        $waspas = $perhitunganWaspasController->data_hasil_akhir($request->jabatan, $request->tahun);
 
         $perhitunganTopsisController = new PerhitunganTopsisController();
-        $topsis = $perhitunganTopsisController->data_hasil_akhir($request->tahun);
+        $topsis = $perhitunganTopsisController->data_hasil_akhir($request->jabatan, $request->tahun);
 
         $data['topsis'] = $topsis;
         $data['waspas'] = $waspas;

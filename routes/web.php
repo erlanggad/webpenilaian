@@ -64,6 +64,7 @@ Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
     Route::get('konversi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'index']);
     Route::get('normalisasi-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'normalisasi']);
     Route::get('hasil-akhir-pengajuan-cuti/{jenis}', [PerhitunganWaspasController::class, 'hasil_akhir']);
+    Route::get('ranking', [RankingController::class, 'index']);
 });
 
 //staf direktur
