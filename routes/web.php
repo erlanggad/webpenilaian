@@ -162,12 +162,13 @@ Route::middleware(['authKepalaSubBagian'])->prefix('kepala-sub-bagian')->group(f
 
     Route::get('hasil-akhir-topsis', [PerhitunganTopsisController::class, 'hasil_akhir']);
     Route::get('ranking', [RankingController::class, 'index']);
+    Route::get('/form-penilaian-saya', [PenilaianController::class, 'penilaian_saya']);
 });
 
 //karyawan
 Route::middleware(['authKaryawan'])->prefix('karyawan')->group(function () {
     Route::get('/home', [Home::class, 'index']);
-    Route::resource('/form-penilaian', PenilaianController::class);
+    Route::resource('/form-penilaian-saya', PenilaianController::class);
 
 
     // Route::resource('/cuti-non-tahunan', Cuti_non::class);
