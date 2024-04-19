@@ -71,6 +71,7 @@ Route::middleware(['authAdmin'])->prefix('admin')->group(function () {
 Route::middleware(['authDirektur'])->prefix('direktur')->group(function () {
     Route::get('/home', [Home::class, 'index']);
     Route::resource('/manage-karyawan', Manage_karyawan::class);
+    Route::get('ranking', [RankingController::class, 'index']);
 });
 
 //staf kepala bagian
