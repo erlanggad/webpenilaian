@@ -839,7 +839,7 @@ class PerhitunganTopsisController extends Controller
                     3
                 );
                 // dd($hasil_final);
-                if ($hasil_negatif != 0 && $hasil_positif != 0) {
+                if ($hasil_negatif != 0 || $hasil_positif != 0) {
                     $hasil_final = number_format($hasil_negatif / $hasil_negatif + $hasil_positif, 3);
                 } else {
                     $hasil_final = 0;
