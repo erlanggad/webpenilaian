@@ -243,7 +243,7 @@ class PerhitunganWaspasController extends Controller
         return view('hasil_akhir_waspas', ['data' => $hasil_akhir]);
     }
 
-    public function data_hasil_akhir($jabatan, $tahun)
+    public function data_hasil_akhir($jabatan, $tahun, $individu)
     {
 
         if ($tahun) {
@@ -258,6 +258,25 @@ class PerhitunganWaspasController extends Controller
 
                     ->get();
             } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
+                // dd($individu);
+                if ($individu == 'individu') {
+                    $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                        ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                        ->where('pegawai.divisi_id', Session('user')['divisi'])
+                        ->where('pegawai.jabatan_id', 3)
+                        ->where('periode', $tahun)
+
+                        ->get();
+                } else {
+                    $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                        ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                        ->where('pegawai.divisi_id', Session('user')['divisi'])
+                        ->where('pegawai.jabatan_id', 4)
+                        ->where('periode', $tahun)
+
+                        ->get();
+                }
+            } elseif (Session('user')['role'] === "karyawan") {
                 $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                     ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                     ->where('pegawai.divisi_id', Session('user')['divisi'])
@@ -316,6 +335,8 @@ class PerhitunganWaspasController extends Controller
                 $Rij_delapan = $item->c8 / $max_c8;
 
                 $normalisasi[] = [
+                    'id' => $item['pegawai_id'],
+
                     'nama_pegawai' => $item['nama_pegawai'],
                     'Rij_satu' => number_format($Rij_satu, 3),
                     'Rij_dua' => number_format($Rij_dua, 3),
@@ -346,7 +367,8 @@ class PerhitunganWaspasController extends Controller
 
                 $q2 = (0.5 * (pow($item2['Rij_satu'], $nilai_criteria[0]) * pow($item2['Rij_dua'], $nilai_criteria[1]) * pow($item2['Rij_tiga'], $nilai_criteria[2]) * pow($item2['Rij_empat'], $nilai_criteria[3]) * pow($item2['Rij_lima'], $nilai_criteria[4]) * pow($item2['Rij_enam'], $nilai_criteria[5]) * pow($item2['Rij_tujuh'], $nilai_criteria[6]) * pow($item2['Rij_delapan'], $nilai_criteria[7])));
                 $hasil_akhir[] = [
-                    // 'id_cuti_non' => $item2['id_cuti_non'],
+                    'id' => $item2['id'],
+
                     'nama' => $item2['nama_pegawai'],
                     'skor_akhir' => number_format($nilai, 3),
                     'sum q1' => $item2['Rij_satu'] * $nilai_criteria[0] + $item2['Rij_dua'] * $nilai_criteria[1] + $item2['Rij_tiga'] * $nilai_criteria[2] + $item2['Rij_empat'] * $nilai_criteria[3] + $item2['Rij_lima'] * $nilai_criteria[4] + $item2['Rij_enam'] * $nilai_criteria[5] + $item2['Rij_tujuh'] * $nilai_criteria[6] + $item2['Rij_delapan'] * $nilai_criteria[7],

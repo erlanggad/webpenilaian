@@ -332,7 +332,7 @@ class PerhitunganMooraController extends Controller
         // }
     }
 
-    public function data_hasil_akhir($jabatan, $tahun)
+    public function data_hasil_akhir($jabatan, $tahun, $individu)
     {
 
         // dd($jabatan);
@@ -345,6 +345,24 @@ class PerhitunganMooraController extends Controller
                     ->where('periode', $tahun)
                     ->get();
             } elseif (Session('user')['role'] === "Kepala Sub Bagian") {
+                if ($individu == 'individu') {
+                    $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                        ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                        ->where('pegawai.divisi_id', Session('user')['divisi'])
+                        ->where('pegawai.jabatan_id', 3)
+                        ->where('periode', $tahun)
+
+                        ->get();
+                } else {
+                    $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
+                        ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
+                        ->where('pegawai.divisi_id', Session('user')['divisi'])
+                        ->where('pegawai.jabatan_id', 4)
+                        ->where('periode', $tahun)
+
+                        ->get();
+                }
+            } elseif (Session('user')['role'] === "karyawan") {
                 $penilaian = Penilaian::join('pegawai', 'pegawai.id', '=', 'penilaian.pegawai_id')
                     ->select('penilaian.*', 'pegawai.nama_pegawai', 'pegawai.created_at as tgl_pegawai_masuk')
                     ->where('pegawai.divisi_id', Session('user')['divisi'])
@@ -399,6 +417,8 @@ class PerhitunganMooraController extends Controller
 
             foreach ($penilaian as $item) {
                 $normalisasi[] = [
+                    'pegawai_id' => $item['pegawai_id'],
+
                     'nama_pegawai' => $item['nama_pegawai'],
                     "c1" => number_format($item->c1 / number_format($hasil_c1, 1), 3),
                     "c2" => number_format($item->c2 / number_format($hasil_c2, 1), 3),
@@ -418,6 +438,8 @@ class PerhitunganMooraController extends Controller
                 $nilai_criteria = $kriteria->pluck('weight');
                 // dd($item_normalisasi['c1']);
                 $atribut_optimal[] = [
+                    'pegawai_id' => $item_normalisasi['pegawai_id'],
+
                     'nama_pegawai' => $item_normalisasi['nama_pegawai'],
                     // "c1 normalisasi" => $item_normalisasi['c1'],
                     "c1" => number_format($item_normalisasi['c1'] * $nilai_criteria[0], 3),
@@ -439,6 +461,8 @@ class PerhitunganMooraController extends Controller
 
                 // Menyimpan hasil akhir dalam variabel baru
                 $hasil_akhir[] = [
+                    'id' => $item['pegawai_id'],
+
                     'nama' => $item['nama_pegawai'],
                     'skor_akhir' => number_format($total, 3)
                 ];

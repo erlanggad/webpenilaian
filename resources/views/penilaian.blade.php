@@ -143,10 +143,10 @@
 
 
 
-                                                {{-- <a class="ml-auto mr-auto" target = "_blank"
-                                                    href="/{{ Session('user')['role'] === 'Karyawan' ? 'karyawan' : Session('user')['role'] }}/print-non-tahunan/{{ $item->id_cuti_non }}">
+                                                <a class="ml-auto mr-auto" target = "_blank"
+                                                    href="/karyawan/print/?id={{ $item->id }}&tahun={{ $item->periode }}">
                                                     <button class="btn btn-success ml-auto mr-auto">Print</button>
-                                                </a> --}}
+                                                </a>
 
                                             </th>
                                         @endif
