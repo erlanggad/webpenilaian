@@ -222,7 +222,7 @@ class PerhitunganWaspasController extends Controller
             $hasil_akhir[] = [
                 // 'id_cuti_non' => $item2['id_cuti_non'],
                 'nama' => $item2['nama_pegawai'],
-                'skor_akhir' => number_format($nilai, 4),
+                'skor_akhir' => number_format($nilai, 3),
                 'sum q1' => $item2['Rij_satu'] * $nilai_criteria[0] + $item2['Rij_dua'] * $nilai_criteria[1] + $item2['Rij_tiga'] * $nilai_criteria[2] + $item2['Rij_empat'] * $nilai_criteria[3] + $item2['Rij_lima'] * $nilai_criteria[4] + $item2['Rij_enam'] * $nilai_criteria[5] + $item2['Rij_tujuh'] * $nilai_criteria[6] + $item2['Rij_delapan'] * $nilai_criteria[7],
 
                 'q1' => $q1,
@@ -348,7 +348,7 @@ class PerhitunganWaspasController extends Controller
                 $hasil_akhir[] = [
                     // 'id_cuti_non' => $item2['id_cuti_non'],
                     'nama' => $item2['nama_pegawai'],
-                    'skor_akhir' => number_format($nilai, 4),
+                    'skor_akhir' => number_format($nilai, 3),
                     'sum q1' => $item2['Rij_satu'] * $nilai_criteria[0] + $item2['Rij_dua'] * $nilai_criteria[1] + $item2['Rij_tiga'] * $nilai_criteria[2] + $item2['Rij_empat'] * $nilai_criteria[3] + $item2['Rij_lima'] * $nilai_criteria[4] + $item2['Rij_enam'] * $nilai_criteria[5] + $item2['Rij_tujuh'] * $nilai_criteria[6] + $item2['Rij_delapan'] * $nilai_criteria[7],
 
                     'q1' => $q1,
