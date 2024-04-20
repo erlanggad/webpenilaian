@@ -33,7 +33,7 @@
                     <h3 class="box-title m-b-0" style="font-size:17px">Rumus</h3>
                     {{-- </div> --}}
                     <div class="col-md-8 mb-4">
-                        <img src="{{ asset('rumus/waspas.png') }}" alt="" style="width: 50%">
+                        <img src="{{ asset('rumus/moora_4.png') }}" alt="" style="width: 50%">
 
                     </div>
                     {{-- <div class="col-md-3 mb-4">

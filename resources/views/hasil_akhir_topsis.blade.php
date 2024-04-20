@@ -34,7 +34,7 @@
                     {{-- </div> --}}
                     <div class="col-12 mb-4 d-flex">
                         <img src="{{ asset('rumus/topsis_5.png') }}" alt="" style="width: 30%">
-                        <img src="{{ asset('rumus/topsis_6.png') }}" alt="" style="width: 40%;height:30vh">
+                        <img src="{{ asset('rumus/topsis_6.png') }}" alt="" style="width: 30%;height:25vh">
 
                     </div>
                     {{-- <div class="col-md-3 mb-4">
