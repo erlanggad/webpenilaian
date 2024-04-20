@@ -612,7 +612,7 @@ class PerhitunganTopsisController extends Controller
                 3
             );
 
-            $hasil_final = number_format($hasil_negatif / $hasil_negatif + $hasil_positif, 3);
+            $hasil_final = number_format($hasil_negatif / ($hasil_negatif + $hasil_positif), 3);
             $hasil_akhir[] = [
                 'nama' => $item['nama_pegawai'],
                 'D+' => $hasil_positif,
@@ -840,7 +840,7 @@ class PerhitunganTopsisController extends Controller
                 );
                 // dd($hasil_final);
                 if ($hasil_negatif != 0 || $hasil_positif != 0) {
-                    $hasil_final = number_format($hasil_negatif / $hasil_negatif + $hasil_positif, 3);
+                    $hasil_final = number_format($hasil_negatif / ($hasil_negatif + $hasil_positif), 3);
                 } else {
                     $hasil_final = 0;
                 }
