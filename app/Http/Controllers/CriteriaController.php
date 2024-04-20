@@ -36,7 +36,6 @@ class CriteriaController extends Controller
     {
         //
         return view('criteria.create');
-
     }
 
     /**
@@ -73,13 +72,13 @@ class CriteriaController extends Controller
         //Simpan data baru dengan kode otomatis
         $criteria = new Criteria;
         $criteria->criteria = $newKode;
-        if($newKode == 'C1'){
+        if ($newKode == 'C1') {
             $criteria->weight = 0.4;
-        }else if($newKode == 'C2'){
+        } else if ($newKode == 'C2') {
             $criteria->weight = 0.3;
-        }else if($newKode == 'C3'){
+        } else if ($newKode == 'C3') {
             $criteria->weight = 0.2;
-        }else if($newKode == 'C4'){
+        } else if ($newKode == 'C4') {
             $criteria->weight = 0.1;
         }
         $criteria->information = $request->input('information');
@@ -123,21 +122,26 @@ class CriteriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            // 'criteria' => 'required',
-            'information' => 'required|string',
-            // 'weight' => 'numeric|between:0,99.99',
-            'type' => 'required|in:benefit,cost',
-        ]);
-        $criteria = Criteria::findOrFail($id);
+        // dd($id);
+        // $request->validate([
+        //     // 'criteria' => 'required',
+        //     'information' => 'required|string',
+        //     // 'weight' => 'numeric|between:0,99.99',
+        //     'type' => 'required|in:benefit,cost',
+        // ]);
+        $criteria = Criteria::where([
+            'id' => $id,
+        ])->first();
+        // $criteria = Criteria::findOrFail($id);
 
         // $criteria = new Criteria;
-        // // $criteria->criteria = $newKode;
-        // $criteria->information = $request->input('information');
-        // $criteria->type = $request->input('type');
-        // $criteria->save();
+        // $criteria->criteria = $newKode;
+        $criteria->information = $request->input('information');
+        $criteria->type = $request->input('type');
+        $criteria->weight = $request->input('weight');
+        $criteria->save();
 
-        $criteria->update($request->all());
+        // $criteria->update($request->all());
 
         return redirect()->route('kriteria.index')->with('success', 'Criteria Has Been updated successfully');
     }

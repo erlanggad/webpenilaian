@@ -1,13 +1,13 @@
 @extends('template')
 
-@section('title','- Form Konfirmasi Pengajuan Cuti')
+@section('title', '- Form Konfirmasi Pengajuan Cuti')
 
 @section('konten')
 
-{{-- <div id="main"> --}}
+    {{-- <div id="main"> --}}
 
 
-  {{-- <div class="page-content"> --}}
+    {{-- <div class="page-content"> --}}
     <div class="container-fluid">
         <div class="row bg-title">
             <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -18,42 +18,48 @@
             </div>
             <!-- /.col-lg-12 -->
         </div>
-    <section class="row">
-      <div class="card col-sm-12">
-        <div class="card-header">
-          <h4 class="card-title">Edit Data </h4>
-        </div>
+        <section class="row">
+            <div class="card col-sm-12">
+                <div class="card-header">
+                    <h4 class="card-title">Edit Data </h4>
+                </div>
 
-        <div class="card-body">
-          <div class="row">
-            <div class="col">
-              <form action="{{ route('kriteria.update', ['kriterium' => $criteria->id]) }}" method="POST">
-                @csrf
-                @method('PATCH')
-                <div class="form-group">
-                  <label for="basicInput">Keterangan</label>
-                  <input type="text" class="form-control mb-3" name="information" value="{{ $criteria->information }}">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <form action="/admin/kriteria/{{ Request::segment(3) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <div class="form-group">
+                                    <label for="basicInput">Keterangan</label>
+                                    <input type="text" class="form-control mb-3" name="information"
+                                        value="{{ $criteria->information }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="basicInput">Benefit / Cost</label>
+                                    <select class="form-control form-select" name="type">
+                                        <option value="benefit">Benefit</option>
+                                        <option value="cost">Cost</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight">Bobot</label>
+                                    <input type="number" class="form-control mb-3" name="weight" min="0"
+                                        step="0.01" value="{{ $criteria->weight }}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info btn-sm">
+                                    <a class="btn btn-warning btn-sm" href="{{ route('kriteria.index') }}"> Back</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="basicInput">Benefit / Cost</label>
-                  <select class="form-control form-select" name="type">
-                    <option value="benefit">Benefit</option>
-                    <option value="cost">Cost</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <input type="submit" class="btn btn-info btn-sm">
-                  <a class="btn btn-warning btn-sm" href="{{ route('kriteria.index') }}"> Back</a>
-                </div>
-              </form>
+
             </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  {{-- </div> --}}
-  {{-- @include('templates.partials.footer') --}}
-</div>
+        </section>
+        {{-- </div> --}}
+        {{-- @include('templates.partials.footer') --}}
+    </div>
 
 @endsection
