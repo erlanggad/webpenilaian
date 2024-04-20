@@ -31,8 +31,8 @@
                 <div class="white-box">
                     <h2 class="box-title m-b-0" style="font-size:17px">Rumus</h3>
                         <div class="table-responsive">
-                            <img src="{{ asset('rumus/Kriteriabenefit.png') }}" alt="" style="width: 40%">
-                            <img src="{{ asset('rumus/Kriteriacost.png') }}" alt="" style="width: 40%">
+                            <img src="{{ asset('rumus/topsis_2.png') }}" alt="" style="width: 30%">
+
 
                             <table id="myTable" class="table table-striped">
                                 <thead>
