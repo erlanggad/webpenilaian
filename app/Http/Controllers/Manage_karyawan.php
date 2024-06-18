@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PegawaiImport;
 use App\Models\Divisi;
 use App\Models\Jabatan;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\models\Karyawan;
 use App\Models\Konfig_cuti;
 use App\Models\Pegawai;
 use App\Models\View_sisa_cuti;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Manage_karyawan extends Controller
 {
@@ -68,6 +70,16 @@ class Manage_karyawan extends Controller
         }
     }
 
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new PegawaiImport, $request->file('file'));
+
+        return redirect()->back()->with('success', 'Data Pegawai berhasil diimport');
+    }
     public function edit(Request $request)
     {
         // $data['karyawan'] = Pegawai::where([

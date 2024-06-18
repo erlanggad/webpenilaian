@@ -51,6 +51,10 @@ Route::get('/verify-otp-action', [Forgot_Password::class, 'verifyOTP']);
 Route::get('/reset-password', [Forgot_Password::class, 'showResetPasswordForm'])->name('reset-password');
 // Route untuk menyimpan password baru
 Route::post('/reset-password-action', [Forgot_Password::class, 'resetPassword']);
+
+Route::get('/ranking/export', [RankingController::class, 'export'])->name('ranking.export');
+Route::post('import-pegawai', [Manage_karyawan::class, 'import'])->name('pegawai.import');
+
 // Route::post('/store-register', [Register::class,'store']);
 //admin
 Route::middleware(['authAdmin'])->prefix('admin')->group(function () {

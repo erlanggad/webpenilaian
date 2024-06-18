@@ -43,6 +43,11 @@
                     </div>
                 @endif
             </div>
+            <div class="col-md-3 mb-4 ml-4">
+                <a href="{{ route('ranking.export', ['jabatan' => request('jabatan'), 'tahun' => request('tahun')]) }}"
+                    class="btn btn-success">Export to Excel
+                </a>
+            </div>
 
             <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                 @if (Session::has('success'))
@@ -65,7 +70,8 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="white-box">
-                    <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Topsis</h2>
+                    <h2 class="box-title">Data Ranking Penilaian Kinerja Karyawan Metode Topsis</h2>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $topsis[0]['nama'] }} </h3>
                     <div class="col-md-4"></div>
 
                     <div class="table-responsive">
@@ -108,6 +114,8 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Moora</h2>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $moora[0]['nama'] }} </h3>
+
                     <div class="col-md-4"></div>
 
                     <div class="table-responsive">
@@ -156,6 +164,8 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Waspas</h2>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $waspas[0]['nama'] }} </h3>
+
                     <div class="col-md-4"></div>
 
                     <div class="table-responsive">

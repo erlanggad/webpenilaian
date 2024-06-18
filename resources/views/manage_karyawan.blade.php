@@ -36,7 +36,15 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h3 class="box-title m-b-0">Data Karyawan</h3>
-                    <div class="col-md-4"></div>
+                    <div class="col-md-6 mt-3">
+                        <form class="row" action="{{ route('pegawai.import') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="file" required>
+                            <button type="submit" class="btn btn-success">Import</button>
+                        </form>
+
+                    </div>
                     <div class="col-md-3 mb-4">
                         <label for="jabatan">Filter Jabatan</label>
                         @php

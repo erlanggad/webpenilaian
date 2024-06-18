@@ -49,12 +49,30 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="periode" class="col-2 col-form-label">Pilih Periode</label>
+                            <div class="col-10">
+                                <select name="periode" class="form-control" id="periode" required>
+                                    <option value="" disabled selected>Pilih Periode</option>
+                                    <option value="2019">2019</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2022">2022</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+
+
+
+
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group row">
                             <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
                             <div class="col-10">
                                 <input class="form-control" name="periode" type="number" min="1" value=""
                                     id="periode" required placeholder="Contoh : 2024">
                             </div>
-                        </div>
+                        </div> --}}
                         @foreach ($criteria as $criterias)
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-2 col-form-label">Nilai
@@ -115,39 +133,57 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Pilih Periode</label>
+                            <div class="col-10">
+                                <select name="pegawai_id" class="form-control" id="pegawai_id" required>
+                                    <option value="" disabled selected>Pilih Periode</option>
+                                    <option value="2019" disabled selected>2019</option>
+                                    <option value="2020" disabled selected>2020</option>
+                                    <option value="2021" disabled selected>2021</option>
+                                    <option value="2022" disabled selected>2022</option>
+                                    <option value="2023" disabled selected>2023</option>
+                                    <option value="2024" disabled selected>2024</option>
+
+
+
+
+                                </select>
+                            </div>
+                        </div>
+                        {{-- <div class="form-group row">
                             <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
                             <div class="col-10">
                                 <input class="form-control" name="periode" type="number" min="1"
                                     value="{{ $penilaian->periode }}" id="periode" required>
-                            </div>
-                        </div>
-                        @foreach ($criteria as $criterias)
-                            <div class="form-group row">
-                                <label for="example-email-input" class="col-2 col-form-label">Nilai
-                                    {{ $criterias->information }} ({{ $criterias->criteria }})</label>
-                                <div class="col-10">
-                                    <input class="form-control" name="{{ $criterias->criteria }}" type="number"
-                                        min="1" max="100"
-                                        value="{{ $penilaian->{strtolower($criterias->criteria)} ?? 0 }}"
-                                        id="{{ $criterias->criteria }}" required>
-                                </div>
-                            </div>
-                        @endforeach
-
-
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-
-                                <button class="btn btn-primary btn-block" type="submit">Kirim</button>
-                            </div>
-                        </div>
-                        </form>
+                            </div> --}}
                     </div>
+                    @foreach ($criteria as $criterias)
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">Nilai
+                                {{ $criterias->information }} ({{ $criterias->criteria }})</label>
+                            <div class="col-10">
+                                <input class="form-control" name="{{ $criterias->criteria }}" type="number" min="1"
+                                    max="100" value="{{ $penilaian->{strtolower($criterias->criteria)} ?? 0 }}"
+                                    id="{{ $criterias->criteria }}" required>
+                            </div>
+                        </div>
+                    @endforeach
+
+
+
+                    <div class="form-group row">
+                        <div class="col-md-12">
+
+                            <button class="btn btn-primary btn-block" type="submit">Kirim</button>
+                        </div>
+                    </div>
+                    </form>
                 </div>
             </div>
-        @endif
+    </div>
+    @endif
 
     </div>
     <script>

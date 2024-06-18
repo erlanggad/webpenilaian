@@ -54,8 +54,8 @@ class Login extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ])->with('divisi', 'jabatan')->first();
+
         if ($pegawai) {
-            // dd($pegawai);
 
             $check = $this->checkUser($request, $pegawai, $pegawai->jabatan->nama);
             // dd($check);
@@ -85,9 +85,9 @@ class Login extends Controller
     private function checkUser($request, $user, $role)
     {
         // Session::flush();
+        // dd($user);
 
-        if ($user->exists()) {
-            // dd($user);
+        if ($user) {
 
             // $user = $user->first()->toArray();
             // unset($user['password']);
@@ -130,7 +130,7 @@ class Login extends Controller
                     break;
             }
         } else {
-            return null;
+            return redirect('/')->with('failed', 'Data User Tidak Ditemukan');;
         }
     }
 

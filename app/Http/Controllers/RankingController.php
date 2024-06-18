@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RankingExport;
 use App\Models\Criteria;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Models\Penilaian;
 use App\Models\Urgensi_Cuti;
 use App\Models\View_sisa_cuti;
 use Illuminate\Contracts\Session\Session;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RankingController extends Controller
 {
@@ -31,6 +33,28 @@ class RankingController extends Controller
 
         // dd($data);
         return view('ranking_penilaian', $data);
+    }
+
+    public function export(Request $request)
+    {
+        $perhitunganMooraController = new PerhitunganMooraController();
+        $moora = $perhitunganMooraController->export_data_hasil_akhir($request->jabatan, $request->tahun, '');
+
+        $perhitunganWaspasController = new PerhitunganWaspasController();
+        $waspas = $perhitunganWaspasController->export_data_hasil_akhir($request->jabatan, $request->tahun, '');
+
+        $perhitunganTopsisController = new PerhitunganTopsisController();
+        $topsis = $perhitunganTopsisController->export_data_hasil_akhir($request->jabatan, $request->tahun, '');
+
+        $data = [
+            'topsis' => $topsis,
+            'waspas' => $waspas,
+            'moora' => $moora,
+        ];
+
+        // dd($data);
+
+        return Excel::download(new RankingExport($data), 'ranking.xlsx');
     }
 
     public function index_penilaian_karyawan($request)
