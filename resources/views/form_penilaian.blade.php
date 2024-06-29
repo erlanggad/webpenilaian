@@ -24,6 +24,18 @@
                     <div class="white-box">
                         <h3 class="box-title m-b-0">Form Penilaian Kinerja</h3>
                         <hr>
+
+                        <!-- Display error message if exists -->
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         @if (Session('user')['role'] == 'Kepala Bagian')
                             <form class="form" action="/kepala-bagian/form-penilaian/store" method="post"
                                 enctype="multipart/form-data">
@@ -34,8 +46,6 @@
 
                         @csrf
 
-
-
                         <div class="form-group row">
                             <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
                             <div class="col-10">
@@ -44,7 +54,6 @@
                                     @foreach ($pegawai as $list)
                                         <option value="{{ $list->id }}">{{ $list->nama_pegawai }}</option>
                                     @endforeach
-
                                 </select>
                             </div>
                         </div>
@@ -59,37 +68,23 @@
                                     <option value="2022">2022</option>
                                     <option value="2023">2023</option>
                                     <option value="2024">2024</option>
-
-
-
-
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="form-group row">
-                            <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
-                            <div class="col-10">
-                                <input class="form-control" name="periode" type="number" min="1" value=""
-                                    id="periode" required placeholder="Contoh : 2024">
-                            </div>
-                        </div> --}}
+
                         @foreach ($criteria as $criterias)
                             <div class="form-group row">
                                 <label for="example-email-input" class="col-2 col-form-label">Nilai
                                     {{ $criterias->information }} ({{ $criterias->criteria }})</label>
                                 <div class="col-10">
-                                    <input class="form-control" name="{{ $criterias->criteria }}" type="number"
-                                        min="1" max="100" value="0" id="{{ $criterias->criteria }}"
-                                        required>
+                                    <input class="form-control" name="{{ $criterias->id }}" type="number" min="1"
+                                        max="100" value="0" id="{{ $criterias->criteria }}" required>
                                 </div>
                             </div>
                         @endforeach
 
-
-
                         <div class="form-group row">
                             <div class="col-md-12">
-
                                 <button class="btn btn-primary btn-block" type="submit">Kirim</button>
                             </div>
                         </div>
@@ -115,114 +110,60 @@
                         @csrf
                         @method('PUT')
 
-
-
                         <div class="form-group row">
-                            <label for="example-email-input" class="col-2 col-form-label">Pilih Pegawai</label>
+                            <label for="pegawai_id" class="col-2 col-form-label">Pilih Pegawai</label>
                             <div class="col-10">
                                 <select name="pegawai_id" class="form-control" id="pegawai_id" required>
                                     <option value="" disabled selected>Pilih Pegawai</option>
-
-
                                     @foreach ($pegawai as $list)
                                         <option value="{{ $list->id }}"
                                             {{ $list->id == $penilaian->pegawai_id ? 'selected' : '' }}>
-                                            {{ $list->nama_pegawai }}</option>
+                                            {{ $list->nama_pegawai }}
+                                        </option>
                                     @endforeach
-
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="example-email-input" class="col-2 col-form-label">Pilih Periode</label>
+                            <label for="periode" class="col-2 col-form-label">Pilih Periode</label>
                             <div class="col-10">
-                                <select name="pegawai_id" class="form-control" id="pegawai_id" required>
-                                    <option value="" disabled selected>Pilih Periode</option>
-                                    <option value="2019" disabled selected>2019</option>
-                                    <option value="2020" disabled selected>2020</option>
-                                    <option value="2021" disabled selected>2021</option>
-                                    <option value="2022" disabled selected>2022</option>
-                                    <option value="2023" disabled selected>2023</option>
-                                    <option value="2024" disabled selected>2024</option>
-
-
-
-
+                                <select name="periode" class="form-control" id="periode" required>
+                                    <option value="" disabled>Pilih Periode</option>
+                                    @for ($year = 2019; $year <= 2024; $year++)
+                                        <option value="{{ $year }}"
+                                            {{ $year == $penilaian->periode ? 'selected' : '' }}>
+                                            {{ $year }}
+                                        </option>
+                                    @endfor
                                 </select>
                             </div>
                         </div>
-                        {{-- <div class="form-group row">
-                            <label for="example-email-input" class="col-2 col-form-label">Periode Tahun</label>
-                            <div class="col-10">
-                                <input class="form-control" name="periode" type="number" min="1"
-                                    value="{{ $penilaian->periode }}" id="periode" required>
-                            </div> --}}
-                    </div>
-                    @foreach ($criteria as $criterias)
+
+                        @foreach ($criteria as $criterias)
+                            <div class="form-group row">
+                                <label for="criteria_{{ $criterias->id }}" class="col-2 col-form-label">Nilai
+                                    {{ $criterias->information }} ({{ $criterias->criteria }})</label>
+                                <div class="col-10">
+                                    @php
+                                        $nilai = $penilaian->firstWhere('criteria_id', $criterias->id)->nilai ?? 0;
+                                    @endphp
+                                    <input class="form-control" name="criteria[{{ $criterias->id }}]" type="number"
+                                        min="1" max="100" value="{{ $nilai }}"
+                                        id="criteria_{{ $criterias->id }}" required>
+                                </div>
+                            </div>
+                        @endforeach
+
                         <div class="form-group row">
-                            <label for="example-email-input" class="col-2 col-form-label">Nilai
-                                {{ $criterias->information }} ({{ $criterias->criteria }})</label>
-                            <div class="col-10">
-                                <input class="form-control" name="{{ $criterias->criteria }}" type="number" min="1"
-                                    max="100" value="{{ $penilaian->{strtolower($criterias->criteria)} ?? 0 }}"
-                                    id="{{ $criterias->criteria }}" required>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-block" type="submit">Kirim</button>
                             </div>
                         </div>
-                    @endforeach
-
-
-
-                    <div class="form-group row">
-                        <div class="col-md-12">
-
-                            <button class="btn btn-primary btn-block" type="submit">Kirim</button>
-                        </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
+        @endif
     </div>
-    @endif
-
-    </div>
-    <script>
-        document.getElementById('urgensi_cuti_id').addEventListener('change', function() {
-            var selectedId = this.value;
-            console.log(selectedId)
-            if (selectedId) {
-                fetch('/urgensi_cuti_detail/' + selectedId)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // console.log(data.data)
-                            document.getElementById('lama_cuti').value = data.data.lama_cuti;
-                            updateTanggalAkhir();
-
-                        } else {
-                            console.error('Data tidak ditemukan');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        });
-
-        // Hitung tanggal akhir berdasarkan tanggal awal dan lama cuti
-        function updateTanggalAkhir() {
-            var tanggalAwal = document.getElementById('tanggal_awal').value;
-            var lamaCuti = parseInt(document.getElementById('lama_cuti').value);
-            if (tanggalAwal && lamaCuti) {
-                var dateAwal = new Date(tanggalAwal);
-                dateAwal.setDate(dateAwal.getDate() + lamaCuti);
-                var tanggalAkhir = dateAwal.toISOString().split('T')[0];
-                document.getElementById('tanggal_akhir').value = tanggalAkhir;
-            }
-            console.log("tanggalawal", tanggalAwal);
-            console.log("lamaCuti", lamaCuti);
-        }
-
-        // Panggil fungsi updateTanggalAkhir saat tanggal_awal berubah
-        document.getElementById('tanggal_awal').addEventListener('change', updateTanggalAkhir);
-    </script>
-
 @endsection

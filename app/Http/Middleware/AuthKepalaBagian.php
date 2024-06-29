@@ -16,9 +16,14 @@ class AuthKepalaBagian
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->get('user')['role'] == 'Kepala Bagian'){
-            return $next($request);
-          }
-          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Kepala Bagian.');
+        if ($request->session()->get('user')) {
+
+            if ($request->session()->get('user')['role'] == 'Kepala Bagian') {
+                return $next($request);
+            } else {
+                return redirect('login')->with('failed', 'Akses ditolak ! Anda bukan Kepala Bagian.');
+            }
+        }
+        return redirect('login')->with('failed', 'Akses ditolak ! Anda bukan Kepala Bagian.');
     }
 }

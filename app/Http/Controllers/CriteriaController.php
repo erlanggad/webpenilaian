@@ -53,13 +53,15 @@ class CriteriaController extends Controller
             'type' => 'required|in:benefit,cost',
         ]);
 
+        // dd($request->all());
+
         // Mengambil data terakhir
-        $lastData = Criteria::latest()->first();
+        $lastData = Criteria::all();
 
         // Mengecek apakah ada data sebelumnya
         if ($lastData) {
             // Mengambil angka dari data terakhir
-            $lastNumber = intval(substr($lastData->criteria, 1));
+            $lastNumber = count($lastData);
 
             // Membuat kode baru dengan increment
             $newNumber = $lastNumber + 1;
@@ -72,15 +74,17 @@ class CriteriaController extends Controller
         //Simpan data baru dengan kode otomatis
         $criteria = new Criteria;
         $criteria->criteria = $newKode;
-        if ($newKode == 'C1') {
-            $criteria->weight = 0.4;
-        } else if ($newKode == 'C2') {
-            $criteria->weight = 0.3;
-        } else if ($newKode == 'C3') {
-            $criteria->weight = 0.2;
-        } else if ($newKode == 'C4') {
-            $criteria->weight = 0.1;
-        }
+        // if ($newKode == 'C1') {
+        //     $criteria->weight = 0.4;
+        // } else if ($newKode == 'C2') {
+        //     $criteria->weight = 0.3;
+        // } else if ($newKode == 'C3') {
+        //     $criteria->weight = 0.2;
+        // } else if ($newKode == 'C4') {
+        //     $criteria->weight = 0.1;
+        // }
+        $criteria->weight = $request->weight;
+
         $criteria->information = $request->input('information');
         $criteria->type = $request->input('type');
         $criteria->save();
@@ -109,6 +113,8 @@ class CriteriaController extends Controller
     {
         // dd($criteria);
         $criteria = Criteria::findOrFail($id);
+
+        // dd($criteria);
 
         return view('criteria.edit', compact('criteria'));
     }

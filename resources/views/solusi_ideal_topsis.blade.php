@@ -39,14 +39,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tipe</th>
-                                        <th>C1</th>
-                                        <th>C2</th>
-                                        <th>C3</th>
-                                        <th>C4</th>
-                                        <th>C5</th>
-                                        <th>C6</th>
-                                        <th>C7</th>
-                                        <th>C8</th>
+                                        @foreach ($kriteria as $k)
+                                            <th>{{ $k->criteria }}</th>
+                                        @endforeach
                                         {{-- <th>Status</th>
                                 <th>Verifikasi Oleh</th>
                                 <th>Aksi</th> --}}
@@ -57,8 +52,8 @@
                                     <tr>
                                         <td>1</td>
                                         <td>Solusi Ideal Positif</td>
-                                        @if ($data['solusi_ideal_positif'])
-                                            @foreach ($data['solusi_ideal_positif'] as $item2)
+                                        @if ($solusi_ideal['solusi_ideal_positif'])
+                                            @foreach ($solusi_ideal['solusi_ideal_positif'] as $item2)
                                                 <td>{{ $item2 }}</td>
                                             @endforeach
                                         @else
@@ -76,9 +71,9 @@
                                     <tr>
                                         <td>2</td>
                                         <td>Solusi Ideal Negatif</td>
-                                        @if ($data['solusi_ideal_negatif'])
+                                        @if ($solusi_ideal['solusi_ideal_negatif'])
 
-                                            @foreach ($data['solusi_ideal_negatif'] as $item2)
+                                            @foreach ($solusi_ideal['solusi_ideal_negatif'] as $item2)
                                                 <td>{{ $item2 }}</td>
                                             @endforeach
                                         @else

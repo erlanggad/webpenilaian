@@ -16,9 +16,14 @@ class AuthDirektur
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->get('user')['role'] == 'Direktur'){
-            return $next($request);
-          }
-          return redirect('login')->with('failed','Akses ditolak ! Anda bukan Direktur.');
+        if ($request->session()->get('user')) {
+
+            if ($request->session()->get('user')['role'] == 'Direktur') {
+                return $next($request);
+            } else {
+                return redirect('login')->with('failed', 'Akses ditolak ! Anda bukan Direktur.');
+            }
+        };
+        return redirect('login')->with('failed', 'Akses ditolak ! Anda bukan Direktur.');
     }
 }

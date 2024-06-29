@@ -39,14 +39,9 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Karyawan</th>
-                                        <th>C1</th>
-                                        <th>C2</th>
-                                        <th>C3</th>
-                                        <th>C4</th>
-                                        <th>C5</th>
-                                        <th>C6</th>
-                                        <th>C7</th>
-                                        <th>C8</th>
+                                        @foreach ($kriteria as $k)
+                                            <th>{{ $k->criteria }}</th>
+                                        @endforeach
                                         {{-- <th>Status</th>
                                 <th>Verifikasi Oleh</th>
                                 <th>Aksi</th> --}}
@@ -54,18 +49,14 @@
                                 </thead>
                                 <tbody>
                                     <?php $no = 1; ?>
-                                    @foreach ($data as $item)
+                                    @foreach ($normalisasi as $item)
                                         <tr>
                                             <td>{{ $no }}</td>
                                             <td>{{ $item['nama_pegawai'] }}</td>
-                                            <td>{{ $item['c1'] }}</td>
-                                            <td>{{ $item['c2'] }}</td>
-                                            <td>{{ $item['c3'] }}</td>
-                                            <td>{{ $item['c4'] }}</td>
-                                            <td>{{ $item['c5'] }}</td>
-                                            <td>{{ $item['c6'] }}</td>
-                                            <td>{{ $item['c7'] }}</td>
-                                            <td>{{ $item['c8'] }}</td>
+                                            @foreach ($kriteria as $k)
+                                                <td>{{ $item[$k->criteria] }}
+                                                </td>
+                                            @endforeach
 
 
                                         </tr>

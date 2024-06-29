@@ -25,4 +25,9 @@ class Criteria extends Model
     //     'c7',
     //     'c8',
     // ];
+
+    public function penilaian()
+    {
+        return $this->hasMany(DetailPenilaian::class, 'criteria_id');
+    }
 }

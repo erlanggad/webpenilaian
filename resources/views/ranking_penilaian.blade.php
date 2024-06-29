@@ -10,10 +10,13 @@
                 <div class="col-md-3 mb-4">
                     <label for="tahun">Filter Periode Tahun</label>
                     @php
-                        use App\Models\Penilaian;
+                        use App\Models\DetailPenilaian;
                         use App\Models\Jabatan;
 
-                        $uniqueYears = Penilaian::getUniqueYears();
+                        $uniqueYears = DetailPenilaian::getUniqueYears();
+
+                        // dd($uniqueYears);
+
                     @endphp
                     <select class="form-control" id="tahun" name="tahun">
                         <option value="" id="semua-tahun-option" selected disabled>Pilih Tahun</option>
@@ -71,7 +74,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title">Data Ranking Penilaian Kinerja Karyawan Metode Topsis</h2>
-                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $topsis[0]['nama'] }} </h3>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ count($topsis) != 0 ? $topsis[0]['nama'] : '' }} </h3>
                     <div class="col-md-4"></div>
 
                     <div class="table-responsive">
@@ -114,7 +117,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Moora</h2>
-                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $moora[0]['nama'] }} </h3>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ count($moora) != 0 ? $moora[0]['nama'] : '' }}</h3>
 
                     <div class="col-md-4"></div>
 
@@ -164,7 +167,7 @@
             <div class="col-sm-12">
                 <div class="white-box">
                     <h2 class="box-title m-b-2">Data Ranking Penilaian Kinerja Karyawan Metode Waspas</h2>
-                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ $waspas[0]['nama'] }} </h3>
+                    <h3 class="box-title m-b-2">Nilai Terbaik : {{ count($waspas) != 0 ? $waspas[0]['nama'] : '' }} </h3>
 
                     <div class="col-md-4"></div>
 
@@ -194,6 +197,62 @@
                                         </tr>
                                         <?php $no++; ?>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="3" class="text-center"> No data available in table
+                                        </td>
+                                    </tr>
+                                @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="white-box">
+                    <h2 class="box-title m-b-2">Data Ranking Penilaian Terbaik Kinerja Karyawan </h2>
+                    <div class=" mb-4">
+                        <a href="{{ route('ranking.export-terbaik', ['jabatan' => request('jabatan'), 'tahun' => request('tahun')]) }}"
+                            class="btn btn-success">Export to Excel
+                        </a>
+                    </div>
+
+                    <div class="col-md-4"></div>
+
+                    <div class="table-responsive">
+                        <table id="myTable" class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Karyawan</th>
+                                    <th>Metode</th>
+                                    <th>Skor Akhir</th>
+                                    {{-- <th>Verifikasi Oleh</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $no = 1; ?>
+                                @if (request('tahun'))
+                                    {{-- @foreach ($bestResult as $item) --}}
+
+                                    <tr>
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $bestResult['nama'] }}</td>
+                                        <td>{{ $bestResult['metode'] }}</td>
+                                        <td>
+                                            {{ $bestResult['skor'] }}
+                                        </td>
+
+                                        {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
+
+                                    </tr>
+                                    <?php $no++; ?>
+                                    {{-- @endforeach --}}
                                 @else
                                     <tr>
                                         <td colspan="3" class="text-center"> No data available in table

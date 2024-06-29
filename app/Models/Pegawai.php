@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pegawai extends Model
 {
     use HasFactory;
-    protected $dates =['tanggal_lahir'];
+    protected $dates = ['tanggal_lahir'];
     protected $primaryKey = 'id';
     protected $table = "pegawai";
     protected $fillable = [
@@ -31,5 +31,10 @@ class Pegawai extends Model
     public function jabatan()
     {
         return $this->belongsTo(Jabatan::class, 'jabatan_id');
+    }
+
+    public function penilaian()
+    {
+        return $this->hasMany(DetailPenilaian::class, 'pegawai_id');
     }
 }

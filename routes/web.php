@@ -53,6 +53,7 @@ Route::get('/reset-password', [Forgot_Password::class, 'showResetPasswordForm'])
 Route::post('/reset-password-action', [Forgot_Password::class, 'resetPassword']);
 
 Route::get('/ranking/export', [RankingController::class, 'export'])->name('ranking.export');
+Route::get('/ranking/export-ranking-terbaik', [RankingController::class, 'exportBestResult'])->name('ranking.export-terbaik');
 Route::post('import-pegawai', [Manage_karyawan::class, 'import'])->name('pegawai.import');
 
 // Route::post('/store-register', [Register::class,'store']);

@@ -76,82 +76,53 @@
                             </thead>
                             <tbody>
                                 <?php $no = 1; ?>
-                                @foreach ($penilaian as $item)
-                                    <tr>
-                                        <td>{{ $no }}</td>
-                                        <td>{{ $item->nama_pegawai }}</td>
-                                        <td>
-                                            {{ $item->c1 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c2 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c3 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c4 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c5 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c6 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c7 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->c8 }}
-                                        </td>
-                                        <td>
-                                            {{ $item->periode }}
-                                        </td>
-                                        {{-- <td>{{$item->verifikasi_oleh}}</td> --}}
-                                        @if (in_array($role, ['Kepala Sub Bagian']))
-                                            <th>
-                                                <a class="ml-auto mr-auto"
-                                                    href="/kepala-sub-bagian/form-penilaian/{{ $item->id }}/edit">
-                                                    <button class="btn btn-warning ml-auto mr-auto">Edit</button>
-                                                </a>
-                                                <form class="ml-auto mr-auto mt-3" method="POST"
-                                                    action="/kepala-sub-bagian/form-penilaian/{{ $item->id }}'">
-                                                    {{ csrf_field() }}
-                                                    @method('DELETE')
-
-                                                    <button class="btn btn-danger ml-auto mr-auto">Delete</button>
-                                                </form>
-                                            </th>
-                                        @elseif (in_array($role, ['Kepala Bagian']))
-                                            <th>
-                                                <a class="ml-auto mr-auto"
-                                                    href="/kepala-bagian/form-penilaian/{{ $item->id }}/edit">
-                                                    <button class="btn btn-warning ml-auto mr-auto">Edit</button>
-                                                </a>
-                                                <form class="ml-auto mr-auto mt-3" method="POST"
-                                                    action="/kepala-bagian/form-penilaian/{{ $item->id }}'">
-                                                    {{ csrf_field() }}
-                                                    @method('DELETE')
-
-                                                    <button class="btn btn-danger ml-auto mr-auto">Delete</button>
-                                                </form>
-                                            </th>
-                                        @endif
-                                        @if (in_array($role, ['karyawan']))
-                                            <th>
-
-
-
-
-                                                <a class="ml-auto mr-auto" target = "_blank"
-                                                    href="/karyawan/print/?id={{ $item->id }}&tahun={{ $item->periode }}">
-                                                    <button class="btn btn-success ml-auto mr-auto">Print</button>
-                                                </a>
-
-                                            </th>
-                                        @endif
-                                    </tr>
-                                    <?php $no++; ?>
+                                @foreach ($penilaian->groupBy(['pegawai_id', 'periode']) as $pegawaiPeriode => $penilaianGroup)
+                                    @foreach ($penilaianGroup as $periode => $penilaians)
+                                        <tr>
+                                            <td>{{ $no }}</td>
+                                            <td>{{ $penilaians->first()->pegawai->nama_pegawai }}</td>
+                                            @foreach ($kriteria as $criteria)
+                                                <td>
+                                                    @php
+                                                        $nilai = $penilaians->firstWhere('criteria_id', $criteria->id);
+                                                    @endphp
+                                                    {{ $nilai ? $nilai->nilai : '-' }}
+                                                </td>
+                                            @endforeach
+                                            <td>{{ $periode }}</td>
+                                            <td>
+                                                @if (in_array($role, ['Kepala Sub Bagian']))
+                                                    <a class="ml-auto mr-auto"
+                                                        href="/kepala-sub-bagian/form-penilaian/{{ $penilaians->first()->id }}/edit">
+                                                        <button class="btn btn-warning ml-auto mr-auto">Edit</button>
+                                                    </a>
+                                                    <form class="ml-auto mr-auto mt-3" method="POST"
+                                                        action="/kepala-sub-bagian/form-penilaian/{{ $penilaians->first()->id }}">
+                                                        {{ csrf_field() }}
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger ml-auto mr-auto">Delete</button>
+                                                    </form>
+                                                @elseif (in_array($role, ['Kepala Bagian']))
+                                                    <a class="ml-auto mr-auto"
+                                                        href="/kepala-bagian/form-penilaian/{{ $penilaians->first()->id }}/edit">
+                                                        <button class="btn btn-warning ml-auto mr-auto">Edit</button>
+                                                    </a>
+                                                    <form class="ml-auto mr-auto mt-3" method="POST"
+                                                        action="/kepala-bagian/form-penilaian/{{ $penilaians->first()->id }}">
+                                                        {{ csrf_field() }}
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger ml-auto mr-auto">Delete</button>
+                                                    </form>
+                                                @elseif (in_array($role, ['karyawan']))
+                                                    <a class="ml-auto mr-auto" target="_blank"
+                                                        href="/karyawan/print/?id={{ $penilaians->first()->id }}&tahun={{ $periode }}">
+                                                        <button class="btn btn-success ml-auto mr-auto">Print</button>
+                                                    </a>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <?php $no++; ?>
+                                    @endforeach
                                 @endforeach
                             </tbody>
                         </table>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BestResultExport;
 use App\Exports\RankingExport;
 use App\Models\Criteria;
 use App\Models\Pegawai;
@@ -32,8 +33,47 @@ class RankingController extends Controller
         $data['moora'] = $moora;
 
         // dd($data);
+
+        // Menggabungkan hasil ke dalam satu array
+        $combinedResults = [];
+
+        foreach ($moora as $result) {
+            $combinedResults[$result['nama']]['moora'] = $result['skor_akhir'];
+        }
+
+        foreach ($waspas as $result) {
+            $combinedResults[$result['nama']]['waspas'] = $result['skor_akhir'];
+        }
+
+        foreach ($topsis as $result) {
+            $combinedResults[$result['nama']]['topsis'] = $result['skor_akhir'];
+        }
+
+        // Mencari nilai tertinggi dan metode yang menghasilkan nilai tersebut
+        $bestResult = [
+            'nama' => '',
+            'metode' => '',
+            'skor' => 0
+        ];
+
+
+
+        foreach ($combinedResults as $nama => $scores) {
+            foreach ($scores as $metode => $skor) {
+                if ($skor > $bestResult['skor']) {
+                    $bestResult['nama'] = $nama;
+                    $bestResult['metode'] = $metode;
+                    $bestResult['skor'] = $skor;
+                }
+            }
+        }
+
+        $data['bestResult'] = $bestResult;
+
+        // dd($data);
         return view('ranking_penilaian', $data);
     }
+
 
     public function export(Request $request)
     {
@@ -54,7 +94,55 @@ class RankingController extends Controller
 
         // dd($data);
 
-        return Excel::download(new RankingExport($data), 'ranking.xlsx');
+        return Excel::download(new RankingExport($data), 'ranking-' . $request->tahun . '.xlsx');
+    }
+
+    public function exportBestResult(Request $request)
+    {
+        // Inisialisasi controller metode perhitungan
+        $perhitunganMooraController = new PerhitunganMooraController();
+        $perhitunganWaspasController = new PerhitunganWaspasController();
+        $perhitunganTopsisController = new PerhitunganTopsisController();
+
+        // Mendapatkan hasil akhir dari masing-masing metode
+        $moora = $perhitunganMooraController->data_hasil_akhir($request->jabatan, $request->tahun, '');
+        $waspas = $perhitunganWaspasController->data_hasil_akhir($request->jabatan, $request->tahun, '');
+        $topsis = $perhitunganTopsisController->data_hasil_akhir($request->jabatan, $request->tahun, '');
+
+        // Menggabungkan hasil ke dalam satu array
+        $combinedResults = [];
+
+        foreach ($moora as $result) {
+            $combinedResults[$result['nama']]['moora'] = $result['skor_akhir'];
+        }
+
+        foreach ($waspas as $result) {
+            $combinedResults[$result['nama']]['waspas'] = $result['skor_akhir'];
+        }
+
+        foreach ($topsis as $result) {
+            $combinedResults[$result['nama']]['topsis'] = $result['skor_akhir'];
+        }
+
+        // Mencari nilai tertinggi dan metode yang menghasilkan nilai tersebut
+        $bestResult = [
+            'nama' => '',
+            'metode' => '',
+            'skor' => 0
+        ];
+
+        foreach ($combinedResults as $nama => $scores) {
+            foreach ($scores as $metode => $skor) {
+                if ($skor > $bestResult['skor']) {
+                    $bestResult['nama'] = $nama;
+                    $bestResult['metode'] = $metode;
+                    $bestResult['skor'] = $skor;
+                }
+            }
+        }
+
+        // Ekspor hasil terbaik ke file Excel
+        return Excel::download(new BestResultExport($bestResult), 'Nilai Terbaik ' . $request->tahun . '.xlsx');
     }
 
     public function index_penilaian_karyawan($request)

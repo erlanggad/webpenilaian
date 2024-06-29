@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', '- Manage Pengajuan Cuti')
+@section('title', '- Normalisasi Penilaian')
 
 @section('konten')
     <div class="container-fluid">
@@ -23,7 +23,6 @@
                 @endif
             </div>
             <!-- /.col-lg-12 -->
-
         </div>
         <!-- /row -->
         <div class="row">
@@ -36,48 +35,33 @@
 
                             <table id="myTable" class="table table-striped">
                                 <thead>
+
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Karyawan</th>
-                                        <th>C1</th>
-                                        <th>C2</th>
-                                        <th>C3</th>
-                                        <th>C4</th>
-                                        <th>C5</th>
-                                        <th>C6</th>
-                                        <th>C7</th>
-                                        <th>C8</th>
-                                        {{-- <th>Status</th>
-                                <th>Verifikasi Oleh</th>
-                                <th>Aksi</th> --}}
+                                        @foreach ($kriteria as $k)
+                                            <th>{{ $k->criteria }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $no = 1; ?>
-                                    @foreach ($data as $item)
+                                    @php $no = 1; @endphp
+                                    @foreach ($normalisasi as $item)
                                         <tr>
-                                            <td>{{ $no }}</td>
+                                            <td>{{ $no++ }}</td>
                                             <td>{{ $item['nama_pegawai'] }}</td>
-                                            <td>{{ $item['Rij_satu'] }}</td>
-                                            <td>{{ $item['Rij_dua'] }}</td>
-                                            <td>{{ $item['Rij_tiga'] }}</td>
-                                            <td>{{ $item['Rij_empat'] }}</td>
-                                            <td>{{ $item['Rij_lima'] }}</td>
-                                            <td>{{ $item['Rij_enam'] }}</td>
-                                            <td>{{ $item['Rij_tujuh'] }}</td>
-                                            <td>{{ $item['Rij_delapan'] }}</td>
-
-
+                                            @foreach ($kriteria as $k)
+                                                <td>{{ isset($item['Rij'][$k->criteria]) ? number_format($item['Rij'][$k->criteria], 3) : '-' }}
+                                                </td>
+                                            @endforeach
                                         </tr>
-                                        <?php $no++; ?>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                 </div>
             </div>
-
         </div>
+        <!-- /.row -->
     </div>
-    <!-- /.row -->
 @endsection

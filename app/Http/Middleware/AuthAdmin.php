@@ -16,9 +16,10 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->get('user')['role'] == 'admin'){
+        // dd($request->session()->get('user'));
+        if ($request->session()->get('user')['role'] == 'admin') {
             return $next($request);
-          }
-          return redirect('login')->with('failed','Akses ditolak ! Anda bukan admin.');
+        }
+        return redirect('login')->with('failed', 'Akses ditolak ! Anda bukan admin.');
     }
 }
